@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Dimmer, Grid, Icon, Loader, Statistic} from 'semantic-ui-react';
+import {Button, Card, Dimmer, Divider, Grid, Icon, Loader, Statistic} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Slider from 'react-rangeslider';
 
@@ -47,18 +47,18 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         </div>
                         <div>
                             {sensor.adjustable ?
-                                    <div className='slider-group'>
-                                        <div className='slider-vertical'>
-                                            <Slider
-                                                min={sensor.minimumValue}
-                                                max={255}
-                                                value={sensor.status}
-                                                orientation={'vertical'}
-                                                onChange={(value) => setValue(value, sensor)}
-                                                onChangeComplete={() => setStatusSensor(sensor, sensor.status)}
-                                            />
-                                        </div>
+                                <div className='slider-group'>
+                                    <div className='slider-vertical'>
+                                        <Slider
+                                            min={sensor.minimumValue}
+                                            max={255}
+                                            value={sensor.status}
+                                            orientation={'vertical'}
+                                            onChange={(value) => setValue(value, sensor)}
+                                            onChangeComplete={() => setStatusSensor(sensor, sensor.status)}
+                                        />
                                     </div>
+                                </div>
                                 : ''
                             }
                         </div>
@@ -66,6 +66,17 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                 </Grid>
             </Card.Content>
             <Card.Content extra>
+                <div className="ui">
+                    <Button
+                        fluid
+                        primary
+                        icon=""
+                        as={Link}
+                        to={`/sensor/${sensor.id}/behavior`}
+                        content={'Behaviors'}
+                    />
+                </div>
+                <Divider/>
                 <div className="ui three buttons">
                     {sensor.switchable || sensor.adjustable ? (
                         <Button

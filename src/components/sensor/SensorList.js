@@ -4,9 +4,9 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
 import Dimmer from 'semantic-ui-react/dist/commonjs/modules/Dimmer/Dimmer';
 import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader/Loader';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid/Grid';
-import {Icon, Label} from "semantic-ui-react";
+import {Icon} from "semantic-ui-react";
 
-export default function SensorList({sensors, loading, deleteSensor, checkStatusSensor, setStatusSensor, setValue, value}) {
+export default function SensorList({sensors, loading, deleteSensor, checkStatusSensor, setStatusSensor, setValue}) {
     const cards = () => {
         return sensors.map(sensor => {
             return (

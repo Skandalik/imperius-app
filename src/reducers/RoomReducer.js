@@ -18,7 +18,7 @@ export default (state = defaultState, action = {}) => {
       return {
         ...state,
         loading: false,
-        rooms: action.payload.data.data || action.payload.data
+        rooms: action.payload.data
       };
     }
     case 'FETCH_ROOM_PENDING': {
@@ -41,7 +41,6 @@ export default (state = defaultState, action = {}) => {
       };
     }
     case 'CREATE_ROOM_FULFILLED': {
-      const room = action.payload.data;
       return {
         ...state,
         rooms: [...state.rooms, action.payload.data],

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Grid, Button, Icon} from 'semantic-ui-react';
+import {Button, Form, Grid} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
 import classnames from 'classnames';
 import {Link} from 'react-router-dom';
@@ -20,10 +20,10 @@ class RoomForm extends React.Component {
             this.props.initialize(room);
 
         }
-    }
+    };
 
     render() {
-        const parse = value => value === undefined ? undefined : parseInt(value)
+        const parse = value => value === undefined ? undefined : parseInt(value, 10);
         const {handleSubmit, pristine, submitting, loading} = this.props;
         const padding = {padding: 50};
         return (

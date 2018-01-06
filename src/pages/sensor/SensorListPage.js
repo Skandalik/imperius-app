@@ -2,14 +2,13 @@ import React from 'react';
 import SensorList from '../../components/sensor/SensorList';
 import {connect} from 'react-redux';
 import {
-    fetchSensors,
-    deleteSensor,
-    refetchSensors,
     checkStatusSensor,
+    deleteSensor,
+    fetchSensors,
+    refetchSensors,
     setStatusSensor
 } from '../../actions/SensorActions';
 import ReactInterval from 'react-interval';
-import {Button} from "semantic-ui-react";
 import {setValue} from "../../actions/HelperActions";
 
 class SensorListPage extends React.Component {
@@ -53,5 +52,5 @@ export default connect(mapStateToProps, {
     deleteSensor,
     checkStatusSensor,
     setStatusSensor,
-    setValue
+    setValue,
 })(SensorListPage);
