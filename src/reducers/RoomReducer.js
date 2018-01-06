@@ -44,7 +44,6 @@ export default (state = defaultState, action = {}) => {
       const room = action.payload.data;
       return {
         ...state,
-        loading: true,
         rooms: [...state.rooms, action.payload.data],
         errors: {},
         loading: false

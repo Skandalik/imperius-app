@@ -17,6 +17,7 @@
     "react-input-slider": "^4.0.1",
     "react-interval": "^2.0.2",
     "react-native-background-timer": "^2.0.0",
+    "react-rangeslider": "^2.2.0",
     "react-redux": "^5.0.6",
     "react-refetch": "^1.0.4",
     "react-router": "^4.2.0",

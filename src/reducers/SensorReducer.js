@@ -2,18 +2,28 @@ const defaultState = {
     sensors: [],
     sensor: {},
     loading: false,
-    errors: {}
+    errors: {},
 };
 
 // TODO popraw refetching sensorów
 
 export default (state = defaultState, action = {}) => {
     switch (action.type) {
+        case 'SET_VALUE': {
+            let sensor = action.payload;
+            return {
+                ...state,
+                sensors: state.sensors.map(
+                    item => (item.id === sensor.id ? sensor : item)
+                ),
+            };
+        }
         case 'REFETCH_SENSORS_FULFILLED': {
+            let sensorsTemp = action.payload.data;
             return {
                 ...state,
                 loading: false,
-                sensors: action.payload.data.data || action.payload.data
+                sensors: (sensorsTemp === state.sensors) ? state.sensors : sensorsTemp
             };
         }
         case 'FETCH_SENSORS_PENDING': {
