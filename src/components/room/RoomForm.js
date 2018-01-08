@@ -29,7 +29,7 @@ class RoomForm extends React.Component {
         return (
             <Grid centered columns={2}>
                 <Grid.Column>
-                    <h1 style={{marginTop: '1em'}}>Edit room</h1>
+                    <h1 style={{marginTop: '1em'}}> { this.props.roomId ? 'Edit room' : 'Add new room' }</h1>
                     <Form onSubmit={handleSubmit} loading={loading} style={padding}>
                         <Field
                             name="room"

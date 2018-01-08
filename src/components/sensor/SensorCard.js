@@ -24,7 +24,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                             </p>
                             <p>
                                 <Icon name="circle"/> Floor:{' '}
-                                {sensor.floor ? sensor.room.room : 'Not set'}
+                                {sensor.room ? sensor.room.floor : 'Not set'}
                             </p>
                             <p>
                                 <Icon name="circle"/> Status: {sensor.status}
@@ -72,7 +72,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         primary
                         icon=""
                         as={Link}
-                        to={`/sensor/${sensor.id}/behavior`}
+                        to={`/sensor/${sensor.id}/behaviors`}
                         content={'Behaviors'}
                     />
                 </div>

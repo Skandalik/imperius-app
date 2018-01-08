@@ -1,15 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchBehaviors} from "../../actions/BehaviorActions";
-import {Button} from "semantic-ui-react";
+import {Button, Icon} from "semantic-ui-react";
 import {Link} from "react-router-dom";
-import SensorBehaviorList from "../../components/behavior/BehaviorList";
+import BehaviorList from "../../components/behavior/BehaviorList";
+import {fetchSensor} from "../../actions/SensorActions";
 
-class SensorBehaviorPage extends React.Component {
+class BehaviorListPage extends React.Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         if (id) {
             this.props.fetchBehaviors(id);
+            this.props.fetchSensor(id);
         }
     }
 
@@ -17,13 +19,14 @@ class SensorBehaviorPage extends React.Component {
         return (
             <div>
                 <h2>Behaviors for sensor</h2>
-                <Button as={Link} to={`/sensor/${this.props.sensor.id}/behavior/add`} primary icon={'plus'}
+                <Button primary disabled={this.props.loading} as={Link} to={`/sensor/${this.props.sensor.id}/behaviors/add`} icon={'plus'}
                         content={'Add new behavior'}/>
                 <Button as={Link} to={'/sensor'} icon={'arrow left'}
                         content={'Go back'}/>
                 <br/>
                 <br/>
-                <SensorBehaviorList
+                <BehaviorList
+                    sensor={this.props.sensor}
                     behaviors={this.props.behaviors}
                     loading={this.props.loading}
                 />
@@ -40,4 +43,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {fetchBehaviors})(SensorBehaviorPage);
+export default connect(mapStateToProps, {fetchSensor, fetchBehaviors})(BehaviorListPage);

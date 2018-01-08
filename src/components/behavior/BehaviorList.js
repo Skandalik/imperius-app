@@ -3,7 +3,7 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
 import {Dimmer, Grid, Loader} from "semantic-ui-react";
 import BehaviorGrid from "./BehaviorGridRow";
 
-export default function SensorBehaviorList({behaviors, loading}) {
+export default function BehaviorList({behaviors, loading}) {
     const columns = () => {
         return behaviors.map(behavior => {
             return (
