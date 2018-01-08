@@ -4,7 +4,8 @@ import {SubmissionError} from 'redux-form';
 import {connect} from 'react-redux';
 import {createBehavior, fetchBehavior, updateBehavior} from '../../actions/BehaviorActions';
 import BehaviorForm from "../../components/behavior/BehaviorForm";
-import {fetchSensors} from "../../actions/SensorActions";
+import {fetchSensor, fetchSensors} from "../../actions/SensorActions";
+import {Dimmer, Loader, Segment} from "semantic-ui-react";
 
 class BehaviorFormPage extends React.Component {
     state = {
@@ -19,7 +20,6 @@ class BehaviorFormPage extends React.Component {
         if (id) {
             this.props.fetchBehavior(id);
         }
-
         this.props.fetchSensors();
     }
 
@@ -32,14 +32,14 @@ class BehaviorFormPage extends React.Component {
         behavior.dependentSensor = data.dependentSensor;
         behavior.sourceProperty = predicate.property;
         behavior.predicate = predicate.predicate;
-        if (data.predicateArgument === 'undefined') {
+        if (!data.predicateArgument) {
             behavior.predicateArgument = action.argument;
         } else {
             behavior.predicateArgument = data.predicateArgument
         }
         behavior.dependentProperty = action.property;
         behavior.action = action.action;
-        if (data.actionArgument === 'undefined') {
+        if (!data.actionArgument) {
             behavior.actionArgument = action.argument;
         } else {
             behavior.actionArgument = data.actionArgument
@@ -78,14 +78,18 @@ class BehaviorFormPage extends React.Component {
                 {this.state.redirect ? (
                     <Redirect to={`/sensor/${this.state.sensorId}/behaviors`}/>
                 ) : (
-                    <BehaviorForm
-                        sensorId={this.state.sensorId}
-                        behaviorId={this.state.behaviorId }
-                        behavior={this.props.behavior}
-                        loading={this.props.loading}
-                        onSubmit={this.submit}
-                        sensors={this.props.sensors}
-                    />
+                    <div>
+                        <h1 style={{marginTop: '1em'}}> {this.state.behaviorId ? 'Edit behavior' : 'Add new behavior'}</h1>
+                        <BehaviorForm
+                            sensorId={this.state.sensorId}
+                            behaviorId={this.state.behaviorId}
+                            behavior={this.props.behavior}
+                            loading={this.props.loading}
+                            sensorLoading={this.props.sensorLoading}
+                            onSubmit={this.submit}
+                            sensors={this.props.sensors}
+                        />
+                    </div>
                 )}
             </div>
         );
@@ -97,8 +101,14 @@ function mapStateToProps(state) {
         behavior: state.behaviorStore.behavior,
         errors: state.behaviorStore.errors,
         loading: state.behaviorStore.loading,
-        sensors: state.sensorStore.sensors
+        sensorLoading: state.sensorStore.loading,
+        sensors: state.sensorStore.sensors,
     };
 }
 
-export default connect(mapStateToProps, {createBehavior, updateBehavior, fetchBehavior, fetchSensors})(BehaviorFormPage);
+export default connect(mapStateToProps, {
+    createBehavior,
+    updateBehavior,
+    fetchBehavior,
+    fetchSensors,
+})(BehaviorFormPage);

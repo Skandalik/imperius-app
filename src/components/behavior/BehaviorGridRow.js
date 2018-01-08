@@ -63,7 +63,12 @@ export default function BehaviorGrid({behavior}) {
 
     return (
         <Grid.Row key={behavior.id} columns={5} verticalAlign={'middle'}>
-            <Grid.Column width={2}>
+            <Grid.Column width={1}>
+                <Segment>
+                    {behavior.id}
+                </Segment>
+            </Grid.Column>
+            <Grid.Column width={1}>
                 <Segment>
                     IF
                 </Segment>

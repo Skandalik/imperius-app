@@ -1,4 +1,6 @@
 export const BehaviorConstants = {
+    OPTION: 'option',
+    INPUT: 'input',
     STATUS: 'status',
     ACTIVE: 'active',
     NOT_EQUALS: 'not equals',
@@ -14,42 +16,42 @@ export const BehaviorConstants = {
 export const PredicatesOptions = [
     {
         optionValue: 'is on',
-        type: 'option',
+        type: BehaviorConstants.OPTION,
         property: BehaviorConstants.ACTIVE,
         predicate: BehaviorConstants.EQUALS,
         argument: BehaviorConstants.ON
     },
     {
         optionValue: 'is off',
-        type: 'option',
+        type: BehaviorConstants.OPTION,
         property: BehaviorConstants.ACTIVE,
         predicate: BehaviorConstants.EQUALS,
         argument: BehaviorConstants.OFF
     },
     {
         optionValue: 'status is bigger than',
-        type: 'input',
+        type: BehaviorConstants.INPUT,
         property: BehaviorConstants.STATUS,
         predicate: BehaviorConstants.BIGGER_THAN,
         argument: ''
     },
     {
         optionValue: 'status is less than',
-        type: 'input',
+        type: BehaviorConstants.INPUT,
         property: BehaviorConstants.STATUS,
         predicate: BehaviorConstants.SMALLER_THAN,
         argument: ''
     },
     {
         optionValue: 'status equals',
-        type: 'input',
+        type: BehaviorConstants.INPUT,
         property: BehaviorConstants.STATUS,
         predicate: BehaviorConstants.EQUALS,
         argument: ''
     },
     {
         optionValue: 'status not equals',
-        type: 'input',
+        type: BehaviorConstants.INPUT,
         property: BehaviorConstants.STATUS,
         predicate: BehaviorConstants.NOT_EQUALS,
         argument: ''
@@ -59,21 +61,21 @@ export const PredicatesOptions = [
 export const ActionOptions = [
     {
         optionValue: 'set on',
-        type: 'option',
+        type: BehaviorConstants.OPTION,
         property: BehaviorConstants.ACTIVE,
         action: BehaviorConstants.SET,
         argument: BehaviorConstants.ON
     },
     {
         optionValue: 'set off',
-        type: 'option',
+        type: BehaviorConstants.OPTION,
         property: BehaviorConstants.ACTIVE,
         action: BehaviorConstants.SET,
         argument: BehaviorConstants.OFF
     },
     {
         optionValue: 'set status',
-        type: 'input',
+        type: BehaviorConstants.INPUT,
         property: BehaviorConstants.STATUS,
         action: BehaviorConstants.SET,
         argument: ''
