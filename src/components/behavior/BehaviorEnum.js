@@ -3,81 +3,60 @@ export const BehaviorConstants = {
     INPUT: 'input',
     STATUS: 'status',
     ACTIVE: 'active',
+    IS_ON: 'is on',
+    IS_OFF: 'is off',
     NOT_EQUALS: 'not equals',
     EQUALS: 'equals',
     BIGGER_THAN: 'is bigger than',
     SMALLER_THAN: 'is smaller than',
     SET: 'set',
     TURN: 'turn',
+    TURN_ON: 'turn on',
+    TURN_OFF: 'turn off',
     ON: '1',
     OFF: '0',
 };
 
-export const PredicatesOptions = [
+export const BehaviorProperties = [
     {
-        optionValue: 'is on',
-        type: BehaviorConstants.OPTION,
+        description: BehaviorConstants.ACTIVE,
         property: BehaviorConstants.ACTIVE,
-        predicate: BehaviorConstants.EQUALS,
-        argument: BehaviorConstants.ON
     },
     {
-        optionValue: 'is off',
-        type: BehaviorConstants.OPTION,
-        property: BehaviorConstants.ACTIVE,
-        predicate: BehaviorConstants.EQUALS,
-        argument: BehaviorConstants.OFF
-    },
-    {
-        optionValue: 'status is bigger than',
-        type: BehaviorConstants.INPUT,
+        description: BehaviorConstants.STATUS,
         property: BehaviorConstants.STATUS,
-        predicate: BehaviorConstants.BIGGER_THAN,
-        argument: ''
-    },
-    {
-        optionValue: 'status is less than',
-        type: BehaviorConstants.INPUT,
-        property: BehaviorConstants.STATUS,
-        predicate: BehaviorConstants.SMALLER_THAN,
-        argument: ''
-    },
-    {
-        optionValue: 'status equals',
-        type: BehaviorConstants.INPUT,
-        property: BehaviorConstants.STATUS,
-        predicate: BehaviorConstants.EQUALS,
-        argument: ''
-    },
-    {
-        optionValue: 'status not equals',
-        type: BehaviorConstants.INPUT,
-        property: BehaviorConstants.STATUS,
-        predicate: BehaviorConstants.NOT_EQUALS,
-        argument: ''
     },
 ];
 
-export const ActionOptions = [
+export const BehaviorArgumentsActive = [
     {
-        optionValue: 'set on',
-        type: BehaviorConstants.OPTION,
-        property: BehaviorConstants.ACTIVE,
-        action: BehaviorConstants.SET,
-        argument: BehaviorConstants.ON
+        description: BehaviorConstants.IS_ON,
+        property: BehaviorConstants.ON,
     },
     {
-        optionValue: 'set off',
-        type: BehaviorConstants.OPTION,
-        property: BehaviorConstants.ACTIVE,
-        action: BehaviorConstants.SET,
-        argument: BehaviorConstants.OFF
+        description: BehaviorConstants.IS_OFF,
+        property: BehaviorConstants.OFF,
+    },
+];
+
+export const BehaviorPredicates = [
+    BehaviorConstants.EQUALS,
+    BehaviorConstants.NOT_EQUALS,
+    BehaviorConstants.BIGGER_THAN,
+    BehaviorConstants.SMALLER_THAN,
+];
+
+export const BehaviorActionSet = [
+    BehaviorConstants.SET,
+];
+
+export const BehaviorActionTurn = [
+    {
+        description: BehaviorConstants.TURN_ON,
+        property: BehaviorConstants.ON
     },
     {
-        optionValue: 'set status',
-        type: BehaviorConstants.INPUT,
-        property: BehaviorConstants.STATUS,
-        action: BehaviorConstants.SET,
-        argument: ''
+        description: BehaviorConstants.TURN_OFF,
+        property: BehaviorConstants.OFF
     },
 ];

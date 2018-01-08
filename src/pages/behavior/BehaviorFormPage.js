@@ -6,6 +6,7 @@ import {createBehavior, fetchBehavior, updateBehavior} from '../../actions/Behav
 import BehaviorForm from "../../components/behavior/BehaviorForm";
 import {fetchSensor, fetchSensors} from "../../actions/SensorActions";
 import {Dimmer, Loader, Segment} from "semantic-ui-react";
+import {BehaviorConstants} from "../../components/behavior/BehaviorEnum";
 
 class BehaviorFormPage extends React.Component {
     state = {
@@ -23,34 +24,24 @@ class BehaviorFormPage extends React.Component {
         this.props.fetchSensors();
     }
 
-    convertToBehavior(data) {
-        let predicate = JSON.parse(data.predicateObject);
-        let action = JSON.parse(data.actionObject);
-        let behavior = {};
-
+    setAdditionalBehaviorProperties(behavior) {
         behavior.sourceSensor = `/api/sensors/${this.state.sensorId}`;
-        behavior.dependentSensor = data.dependentSensor;
-        behavior.sourceProperty = predicate.property;
-        behavior.predicate = predicate.predicate;
-        if (!data.predicateArgument) {
-            behavior.predicateArgument = action.argument;
-        } else {
-            behavior.predicateArgument = data.predicateArgument
+        if (behavior.dependentProperty === BehaviorConstants.ACTIVE) {
+            behavior.actionArgument = behavior.action;
+            behavior.action = BehaviorConstants.SET;
         }
-        behavior.dependentProperty = action.property;
-        behavior.action = action.action;
-        if (!data.actionArgument) {
-            behavior.actionArgument = action.argument;
-        } else {
-            behavior.actionArgument = data.actionArgument
+
+        if (behavior.sourceProperty === BehaviorConstants.ACTIVE) {
+            behavior.predicateArgument = behavior.predicate;
+            behavior.predicate = BehaviorConstants.EQUALS;
         }
 
         return behavior;
     }
 
     //todo polepsz
-    submit = data => {
-        let behavior = this.convertToBehavior(data);
+    submit = behavior => {
+        behavior = this.setAdditionalBehaviorProperties(behavior)
         if (!behavior.id) {
             return this.props
                 .createBehavior(behavior)
