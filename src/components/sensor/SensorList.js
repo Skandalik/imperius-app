@@ -6,7 +6,7 @@ import Loader from 'semantic-ui-react/dist/commonjs/elements/Loader/Loader';
 import Grid from 'semantic-ui-react/dist/commonjs/collections/Grid/Grid';
 import {Icon} from "semantic-ui-react";
 
-export default function SensorList({sensors, loading, deleteSensor, checkStatusSensor, setStatusSensor, setValue}) {
+export default function SensorList({sensors, loading, deleteSensor, checkStatusSensor, setStatusSensor, setValue, setStateSensor}) {
     const cards = () => {
         return sensors.map(sensor => {
             return (
@@ -18,6 +18,8 @@ export default function SensorList({sensors, loading, deleteSensor, checkStatusS
                         checkStatusSensor={checkStatusSensor}
                         setStatusSensor={setStatusSensor}
                         setValue={setValue}
+                        setStateSensor={setStateSensor}
+
                     />
                 </Grid.Column>
             );

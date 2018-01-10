@@ -63,8 +63,7 @@ export default (state = defaultState, action = {}) => {
             };
         }
         case 'DELETE_BEHAVIOR_PENDING': {
-            let behavior = action.meta.behaviorObject
-            behavior.loading = true
+            let behavior = action.meta.behaviorObject;
             return {
                 ...state,
                 behaviors: state.behaviors.map(

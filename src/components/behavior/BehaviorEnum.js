@@ -1,62 +1,78 @@
-export const BehaviorConstants = {
-    OPTION: 'option',
-    INPUT: 'input',
-    STATUS: 'status',
-    ACTIVE: 'active',
-    IS_ON: 'is on',
-    IS_OFF: 'is off',
-    NOT_EQUALS: 'not equals',
-    EQUALS: 'equals',
-    BIGGER_THAN: 'is bigger than',
-    SMALLER_THAN: 'is smaller than',
+export const BehaviorActionsEnum = {
+    TURN_OFF: 'turn_off',
+    TURN_ON: 'turn_on',
     SET: 'set',
-    TURN: 'turn',
-    TURN_ON: 'turn on',
-    TURN_OFF: 'turn off',
-    ON: '1',
-    OFF: '0',
 };
 
-export const BehaviorProperties = [
-    {
-        description: BehaviorConstants.ACTIVE,
-        property: BehaviorConstants.ACTIVE,
-    },
-    {
-        description: BehaviorConstants.STATUS,
-        property: BehaviorConstants.STATUS,
-    },
-];
+export const SensorStateChangeEnumChoices = {
+    1: 'on',
+    0: 'off'
+};
 
-export const BehaviorArgumentsActive = [
-    {
-        description: BehaviorConstants.IS_ON,
-        property: BehaviorConstants.ON,
-    },
-    {
-        description: BehaviorConstants.IS_OFF,
-        property: BehaviorConstants.OFF,
-    },
-];
+export const BehaviorActionsEnumChoices = {
+    'turn_off': 'TURN OFF',
+    'turn_on': 'TURN ON',
+    'set': 'SET',
+};
 
-export const BehaviorPredicates = [
-    BehaviorConstants.EQUALS,
-    BehaviorConstants.NOT_EQUALS,
-    BehaviorConstants.BIGGER_THAN,
-    BehaviorConstants.SMALLER_THAN,
-];
+export const BehaviorActionsFetchableEnumChoices = {
+    'turn_off': 'TURN OFF',
+    'turn_on': 'TURN ON',
+};
 
-export const BehaviorActionSet = [
-    BehaviorConstants.SET,
-];
+export const BehaviorActionsSwitchableEnumChoices = {
+    'set': 'SET',
+};
 
-export const BehaviorActionTurn = [
-    {
-        description: BehaviorConstants.TURN_ON,
-        property: BehaviorConstants.ON
-    },
-    {
-        description: BehaviorConstants.TURN_OFF,
-        property: BehaviorConstants.OFF
-    },
-];
+export const BehaviorFetchableSwitchableConditions = {
+    IS_OFF: 'is_off',
+    IS_ON: 'is_on',
+};
+
+export const BehaviorAdjustableConditions = {
+    IS_OFF: 'is_off',
+    IS_ON: 'is_on',
+    EQUALS: 'equals',
+    NOT_EQUALS: 'not_equals',
+    BIGGER_THAN: 'bigger_than',
+    SMALLER_THAN: 'smaller_than',
+    BIGGER_EQUALS_THAN: 'bigger_equals_than',
+    SMALLER_EQUALS_THAN: 'smaller_equals_than'
+};
+
+
+export const BehaviorConditionsEnum = {
+    IS_OFF: 'is_off',
+    IS_ON: 'is_on',
+    EQUALS: 'equals',
+    NOT_EQUALS: 'not_equals',
+    BIGGER_THAN: 'bigger_than',
+    SMALLER_THAN: 'smaller_than',
+    BIGGER_EQUALS_THAN: 'bigger_equals_than',
+    SMALLER_EQUALS_THAN: 'smaller_equals_than'
+};
+
+export const BehaviorCondititionsFetchableEnumChoices = {
+    'is_off': 'IS TURNED OFF',
+    'is_on': 'IS TURNED ON',
+};
+
+export const BehaviorConditionsSwitchableEnumChoices = {
+    'equals': 'STATUS EQUALS',
+    'not_equals': 'STATUS NOT EQUALS',
+    'bigger_than': 'STATUS IS BIGGER THAN',
+    'smaller_than': 'STATUS IS SMALLER THAN',
+    'bigger_equals_than': 'STATUS IS BIGGER OR EQUALS ',
+    'smaller_equals_than': 'STATUS IS SMALLER OR EQUALS ',
+};
+
+export const BehaviorConditionsEnumChoices = {
+    'is_off': 'IS TURNED OFF',
+    'is_on': 'IS TURNED ON',
+    'equals': 'STATUS EQUALS',
+    'not_equals': 'STATUS NOT EQUALS',
+    'bigger_than': 'STATUS IS BIGGER THAN',
+    'smaller_than': 'STATUS IS SMALLER THAN',
+    'bigger_equals_than': 'STATUS IS BIGGER OR EQUALS ',
+    'smaller_equals_than': 'STATUS IS SMALLER OR EQUALS ',
+};

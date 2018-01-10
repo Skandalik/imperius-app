@@ -3,13 +3,14 @@ import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
 import {Dimmer, Grid, Loader} from "semantic-ui-react";
 import BehaviorGrid from "./BehaviorGridRow";
 
-export default function BehaviorList({behaviors, loading}) {
+export default function BehaviorList({behaviors, loading, deleteBehavior}) {
     const columns = () => {
         return behaviors.map(behavior => {
             return (
                 <BehaviorGrid
                     key={behavior.id}
                     behavior={behavior}
+                    deleteBehavior={deleteBehavior}
                 />
             )
         });

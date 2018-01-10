@@ -5,7 +5,7 @@ import {
     checkStatusSensor,
     deleteSensor,
     fetchSensors,
-    refetchSensors,
+    refetchSensors, setStateSensor,
     setStatusSensor
 } from '../../actions/SensorActions';
 import ReactInterval from 'react-interval';
@@ -33,6 +33,7 @@ class SensorListPage extends React.Component {
                     checkStatusSensor={this.props.checkStatusSensor}
                     setStatusSensor={this.props.setStatusSensor}
                     setValue={this.props.setValue}
+                    setStateSensor={this.props.setStateSensor}
                 />
             </div>
         );
@@ -53,4 +54,5 @@ export default connect(mapStateToProps, {
     checkStatusSensor,
     setStatusSensor,
     setValue,
+    setStateSensor
 })(SensorListPage);

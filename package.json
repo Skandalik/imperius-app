@@ -25,6 +25,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "1.0.17",
     "react-select": "^1.1.0",
+    "react-semantic-redux-form": "^1.2.4",
     "react-timer-mixin": "^0.13.3",
     "react-widgets": "^4.1.1",
     "redux": "^3.7.2",

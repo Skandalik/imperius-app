@@ -19,7 +19,7 @@ export default function RoomCard({room, deleteRoom}) {
             </Card.Content>
             <Card.Content extra>
                 <div className="ui two buttons">
-                    <Button as={Link} to={`/room/edit/${room.id}`} basic color={'red'} icon={'pencil'}
+                    <Button as={Link} to={`/room/edit/${room.id}`} basic color={'green'} icon={'pencil'}
                             content={'Edit'}/>
                     <Button basic color="red" onClick={() => {
                         deleteRoom(room)

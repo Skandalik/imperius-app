@@ -1,4 +1,5 @@
 import {client} from './index';
+import {SensorStateChangeEnumChoices} from "../components/behavior/BehaviorEnum";
 
 const url = '/sensors';
 
@@ -42,6 +43,18 @@ export function setStatusSensor(sensor, status) {
                 sensorObject: sensor
             },
             payload: client.put(`${url}/${sensor.id}/status/set/${status}`)
+        });
+    };
+}
+
+export function setStateSensor(sensor, state) {
+    return dispatch => {
+        return dispatch({
+            type: 'SET_STATUS',
+            meta: {
+                sensorObject: sensor
+            },
+            payload: client.put(`${url}/${sensor.id}/set/${SensorStateChangeEnumChoices[state]}`)
         });
     };
 }

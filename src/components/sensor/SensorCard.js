@@ -3,7 +3,7 @@ import {Button, Card, Dimmer, Divider, Grid, Icon, Loader, Statistic} from 'sema
 import {Link} from 'react-router-dom';
 import Slider from 'react-rangeslider';
 
-export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, deleteSensor, setValue}) {
+export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, deleteSensor, setValue, setStateSensor}) {
     return (
         <Card>
             <Card.Content>
@@ -16,9 +16,6 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         <br/>
                         <Card.Meta>
                             <p>
-                                <Icon name="circle"/> ID: {sensor.id}
-                            </p>
-                            <p>
                                 <Icon name="home"/> Room:{' '}
                                 {sensor.room ? sensor.room.room : 'Not set'}
                             </p>
@@ -27,8 +24,13 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                                 {sensor.room ? sensor.room.floor : 'Not set'}
                             </p>
                             <p>
-                                <Icon name="circle"/> Status: {sensor.status}
+                                <Icon name="circle"/> ID: {sensor.id}
                             </p>
+                            {sensor.switchable ? '' :
+                                <p>
+                                    <Icon name="circle"/> Status: {sensor.status}
+                                </p>
+                            }
                             <p>
                                 <Icon name="circle"/> {sensor.uuid}
                             </p>
@@ -82,7 +84,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         <Button
                             color={sensor.active ? 'red' : 'green'}
                             icon="power"
-                            onClick={() => setStatusSensor(sensor, ~~!sensor.active)}
+                            onClick={() => setStateSensor(sensor, ~~!sensor.active)}
                         />
                     ) : (
                         <Button

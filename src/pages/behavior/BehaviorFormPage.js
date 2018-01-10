@@ -22,26 +22,21 @@ class BehaviorFormPage extends React.Component {
             this.props.fetchBehavior(id);
         }
         this.props.fetchSensors();
+        this.props.fetchSensor(this.state.sensorId);
     }
 
-    setAdditionalBehaviorProperties(behavior) {
+    prepareBehavior (behavior){
         behavior.sourceSensor = `/api/sensors/${this.state.sensorId}`;
-        if (behavior.dependentProperty === BehaviorConstants.ACTIVE) {
-            behavior.actionArgument = behavior.action;
-            behavior.action = BehaviorConstants.SET;
-        }
-
-        if (behavior.sourceProperty === BehaviorConstants.ACTIVE) {
-            behavior.predicateArgument = behavior.predicate;
-            behavior.predicate = BehaviorConstants.EQUALS;
-        }
+        behavior.dependentSensor = `/api/sensors/${behavior.dependentSensor.id}`;
 
         return behavior;
-    }
+    };
 
     //todo polepsz
     submit = behavior => {
-        behavior = this.setAdditionalBehaviorProperties(behavior)
+
+        behavior = this.prepareBehavior(behavior);
+
         if (!behavior.id) {
             return this.props
                 .createBehavior(behavior)
@@ -76,9 +71,9 @@ class BehaviorFormPage extends React.Component {
                             behaviorId={this.state.behaviorId}
                             behavior={this.props.behavior}
                             loading={this.props.loading}
-                            sensorLoading={this.props.sensorLoading}
                             onSubmit={this.submit}
                             sensors={this.props.sensors}
+                            sensor={this.props.sensor}
                         />
                     </div>
                 )}
@@ -102,4 +97,5 @@ export default connect(mapStateToProps, {
     updateBehavior,
     fetchBehavior,
     fetchSensors,
+    fetchSensor,
 })(BehaviorFormPage);

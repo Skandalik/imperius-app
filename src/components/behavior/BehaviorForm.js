@@ -1,26 +1,23 @@
 import React from 'react';
-import {Button, Dimmer, Form, Grid, Label, Segment} from 'semantic-ui-react';
+import {Button, Form, Grid, Segment} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
 import classnames from 'classnames';
-import {Link} from 'react-router-dom';
+import Link from "react-router-dom/es/Link";
 import {
-    ActionOptions, BehaviorActions, BehaviorConstants, BehaviorPredicates, BehaviorProperties,
-    PredicatesOptions, BehaviorArgumentsActive, BehaviorActionTurn, BehaviorActionSet
+    BehaviorActionsEnum,
+    BehaviorActionsEnumChoices,
+    BehaviorConditionsEnumChoices, BehaviorConditionsSwitchableEnumChoices, BehaviorCondititionsFetchableEnumChoices,
+    BehaviorFetchableSwitchableConditions
 } from "./BehaviorEnum";
-import {fetchSensor} from "../../actions/SensorActions";
-import Loader from "semantic-ui-react/dist/es/elements/Loader/Loader";
 
 class BehaviorForm extends React.Component {
     state = {
-        predicateHidden: true,
-        predicateValue: 1,
-        actionHidden: true,
-        actionValue: 1,
+        sourceInputHidden: true,
+        dependentInputHidden: true,
     };
-
-    renderField = ({input, label, type, value, meta: {touched, error}}) => (
-        <Form.Field className={classnames({error: touched && error})}>
-            <input {...input} placeholder={label} value={value} type={type}/>
+    renderField = ({input, hidden, label, type, meta: {touched, error}}) => (
+        <Form.Field hidden={hidden} disabled={hidden} className={classnames({error: touched && error})}>
+            <input {...input} placeholder={label} type={type}/>
             {touched && error && <span className="error">{error.message}</span>}
         </Form.Field>
     );
@@ -33,13 +30,12 @@ class BehaviorForm extends React.Component {
         }
     };
 
-    options = (options) => {
-        return options.map((value, index) => {
-                return (
-                    <option key={index} value={value}>{value}</option>
-                );
-            }
-        );
+    getBehaviorOptions = (Enum) => {
+        return Object.keys(Enum).map((key, index) => {
+            return (
+                <option key={index} value={key}>{Enum[key]}</option>
+            )
+        });
     };
 
     sensors = () => {
@@ -47,160 +43,104 @@ class BehaviorForm extends React.Component {
                 if (parseInt(sensor.id) === parseInt(this.props.sensorId)) {
                     return;
                 }
-                const sensorIri = '/api/sensors/' + sensor.id;
                 return (
-                    <option key={sensor.id} value={sensorIri}>{sensor.name ? sensor.name : sensor.uuid}</option>
+                    <option key={sensor.id} value={sensor.id}>{sensor.id} - {sensor.name ? sensor.name : sensor.uuid}</option>
                 );
 
             }
         );
     };
 
-    onSourcePropertyChange = (e) => {
-        let value = e.currentTarget.value;
-        let hidden = true;
-
-        if (value === BehaviorConstants.STATUS) {
-            hidden = false;
+    onSourceStatusChange(event) {
+        let value = event.target.value;
+        if (value !== BehaviorFetchableSwitchableConditions.IS_OFF && value !== BehaviorFetchableSwitchableConditions.IS_ON) {
+            this.setState({
+                sourceInputHidden: false
+            });
+            return;
         }
 
         this.setState({
-            predicateHidden: hidden
+            sourceInputHidden: true
         })
     };
 
-    onDependentPropertyChange = (e) => {
-        let value = e.currentTarget.value;
-        let hidden = true;
-
-        if (value === BehaviorConstants.STATUS) {
-            hidden = false;
+    onDependentStatusChange(event) {
+        let value = event.target.value;
+        if (value === BehaviorActionsEnum.SET) {
+            this.setState({
+                dependentInputHidden: false
+            });
+            return;
         }
 
         this.setState({
-            actionHidden: hidden
+            dependentInputHidden: true
         })
     };
 
-    onPredicateChange = (e) => {
-        let value = e.currentTarget.value;
-
-        if (this.state.predicateHidden) {
-            let predicateValue = 1;
-            if (value === BehaviorConstants.OFF) {
-                predicateValue = 0;
-            }
-
-            this.setState({
-                predicateValue: predicateValue
-            })
+    getOptionsBasedOnProperty(sensor) {
+        if (sensor.fetchable) {
+            return this.getBehaviorOptions(BehaviorCondititionsFetchableEnumChoices);
         }
-    };
-
-    onActionChange = (e) => {
-        let value = e.currentTarget.value;
-
-        if (this.state.actionHidden) {
-            let actionValue = 1;
-            if (value === BehaviorConstants.OFF) {
-                actionValue = 0;
-            }
-
-            this.setState({
-                actionValue: actionValue
-            })
-        }
-    };
-
-    properties = (properties: array) => {
-        return properties.map((value, index) => {
-                return (
-                    <option key={index} value={value.property}>{value.description}</option>
-                );
-            }
-        );
-    };
+        return this.getBehaviorOptions(BehaviorConditionsSwitchableEnumChoices);
+    }
 
     render() {
-        const {handleSubmit, pristine, submitting, loading, behaviorId, sensorId, behavior} = this.props;
+        const parse = value => value === undefined ? undefined : parseInt(value, 10);
+        const {handleSubmit, pristine, submitting, loading, behavior, behaviorId, sensorId} = this.props;
         const padding = {padding: 50};
         return (
-            <div>
-                <h1 style={{marginTop: '1em'}}> {behaviorId ? 'Edit behavior' : 'Add new behavior'}</h1>
-                <Segment>
-                    <Form onSubmit={handleSubmit} loading={loading} style={padding}>
-                        <Segment.Group horizontal>
-                            <Segment>
-                                <Label size={'huge'} color={'blue'}>IF</Label>
-                                <Label size={'huge'}> THIS SENSOR</Label>
-                            </Segment>
-                            <Segment>
-                                <Field type={'select'} component={'select'} name="sourceProperty" className="ui dropdown" onChange={this.onSourcePropertyChange}>
-                                    <option>- Choose property -</option>
-                                    {this.properties(BehaviorProperties)}
-                                </Field>
-                            </Segment>
-                            <Segment>
-                                <Field type={'select'} component={'select'} name="predicate" className="ui dropdown" onChange={this.onPredicateChange}>
+            <Grid centered columns={2}>
+                <Grid.Column>
+                    <Segment>
+                        <Form onSubmit={handleSubmit} loading={loading} style={padding}>
+                            <h1>IF THIS SENSOR</h1>
+                            <div>
+                                <Field name={'sourceCondition'} type={'select'} component={'select'}
+                                       className={'ui dropdown'} onChange={(event) => this.onSourceStatusChange(event)}>
                                     <option>- Choose condition -</option>
-                                    {this.state.predicateHidden ?
-                                        this.properties(BehaviorArgumentsActive) :
-                                        this.options(BehaviorPredicates)}
+                                    {this.getBehaviorOptions(BehaviorConditionsEnumChoices)}
                                 </Field>
-                            </Segment>
-                            <Segment hidden={this.state.predicateHidden}>
                                 <Field
-                                    component={'input'}
-                                    name="predicateArgument"
-                                    type="text"
-                                    defaultValue={
-                                        this.state.predicateHidden ? this.state.predicateValue : ''
-                                    }
+                                    parse={parse}
+                                    hidden={this.state.sourceInputHidden}
+                                    name={'sourceArgument'}
+                                    type={'number'}
+                                    component={this.renderField}
+                                    label={'Value for status condition'}
                                 />
-                            </Segment>
-                        </Segment.Group>
-                        <Segment.Group horizontal>
-                            <Segment>
-                                <Label size={'huge'} color={'blue'}>THEN</Label>
-                            </Segment>
-                            <Segment>
-                                <Field type={'select'} component={'select'} name="dependentSensor" className="ui dropdown">
+                            </div>
+                            <h1>THEN SENSOR</h1>
+                            <div>
+                                <Field name={'dependentSensor.id'} type={'select'} component={'select'}
+                                       className={'ui dropdown'}>
                                     <option>- Choose sensor -</option>
                                     {this.sensors()}
                                 </Field>
-                            </Segment>
-                            <Segment>
-                                <Field type={'select'} component={'select'} name="dependentProperty" className="ui dropdown" onChange={this.onDependentPropertyChange}>
-                                    <option>- Choose property -</option>
-                                    {this.properties(BehaviorProperties)}
+                                <Field name={'dependentAction'} type={'select'} component={'select'}
+                                       className={'ui dropdown'}
+                                       onChange={(event) => this.onDependentStatusChange(event)}>
+                                    <option>- Choose condition -</option>
+                                    {this.getBehaviorOptions(BehaviorActionsEnumChoices)}
                                 </Field>
-                            </Segment>
-                            <Segment>
-                                <Field type={'select'} component={'select'} name="action" className="ui dropdown" onChange={this.onActionChange}>
-                                    <option>- Choose action -</option>
-                                    {this.state.actionHidden ?
-                                        this.properties(BehaviorActionTurn) :
-                                        this.options(BehaviorActionSet)}
-                                </Field>
-                            </Segment>
-                            <Segment hidden={this.state.actionHidden}>
                                 <Field
-                                    component={'input'}
-                                    name="actionArgument"
-                                    type="text"
-                                    value={
-                                        this.state.actionHidden ? this.state.actionValue : ''
-                                    }
+                                    parse={parse}
+                                    hidden={this.state.dependentInputHidden}
+                                    name={'actionArgument'}
+                                    type={'number'}
+                                    component={this.renderField}
+                                    label={'Set status to this value'}
                                 />
-                            </Segment>
-                        </Segment.Group>
-                        <br/>
-                        <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
-                        <Button as={Link} to={`/sensor/${sensorId}/behaviors`} icon={'arrow left'}
-                                content={'Go back'}/>
-                    </Form>
-                </Segment>
-            </div>
+                            </div>
+                            <br/>
+                            <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
+                            <Button as={Link} to={`/sensor/${sensorId}/behaviors`} icon={'arrow left'}
+                                    content={'Go back'}/>
+                        </Form>
+                    </Segment>
+                </Grid.Column>
+            </Grid>
         );
     }
 }
@@ -208,6 +148,7 @@ class BehaviorForm extends React.Component {
 const
     validate = values => {
         const errors = {};
+
         return errors;
     };
 

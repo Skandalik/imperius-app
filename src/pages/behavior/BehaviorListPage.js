@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchBehaviors} from "../../actions/BehaviorActions";
+import {deleteBehavior, fetchBehaviors} from "../../actions/BehaviorActions";
 import {Button, Icon} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import BehaviorList from "../../components/behavior/BehaviorList";
@@ -29,6 +29,7 @@ class BehaviorListPage extends React.Component {
                     sensor={this.props.sensor}
                     behaviors={this.props.behaviors}
                     loading={this.props.loading}
+                    deleteBehavior={this.props.deleteBehavior}
                 />
             </div>
         );
@@ -38,9 +39,10 @@ class BehaviorListPage extends React.Component {
 function mapStateToProps(state) {
     return {
         sensor: state.sensorStore.sensor,
+        behavior: state.behaviorStore.behavior,
         behaviors: state.behaviorStore.behaviors,
         loading: state.behaviorStore.loading
     };
 }
 
-export default connect(mapStateToProps, {fetchSensor, fetchBehaviors})(BehaviorListPage);
+export default connect(mapStateToProps, {fetchSensor, fetchBehaviors, deleteBehavior})(BehaviorListPage);
