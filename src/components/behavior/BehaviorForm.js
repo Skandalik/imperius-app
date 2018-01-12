@@ -97,7 +97,7 @@ class BehaviorForm extends React.Component {
                         <Form onSubmit={handleSubmit} loading={loading} style={padding}>
                             <h1>IF THIS SENSOR</h1>
                             <div>
-                                <Field name={'sourceCondition'} type={'select'} component={'select'}
+                                <Field name={'requirement'} type={'select'} component={'select'}
                                        className={'ui dropdown'} onChange={(event) => this.onSourceStatusChange(event)}>
                                     <option>- Choose condition -</option>
                                     {this.getBehaviorOptions(BehaviorConditionsEnumChoices)}
@@ -105,7 +105,7 @@ class BehaviorForm extends React.Component {
                                 <Field
                                     parse={parse}
                                     hidden={this.state.sourceInputHidden}
-                                    name={'sourceArgument'}
+                                    name={'requirementArgument'}
                                     type={'number'}
                                     component={this.renderField}
                                     label={'Value for status condition'}
@@ -113,12 +113,12 @@ class BehaviorForm extends React.Component {
                             </div>
                             <h1>THEN SENSOR</h1>
                             <div>
-                                <Field name={'dependentSensor.id'} type={'select'} component={'select'}
+                                <Field name={'actionSensor.id'} type={'select'} component={'select'}
                                        className={'ui dropdown'}>
                                     <option>- Choose sensor -</option>
                                     {this.sensors()}
                                 </Field>
-                                <Field name={'dependentAction'} type={'select'} component={'select'}
+                                <Field name={'action'} type={'select'} component={'select'}
                                        className={'ui dropdown'}
                                        onChange={(event) => this.onDependentStatusChange(event)}>
                                     <option>- Choose condition -</option>
@@ -135,7 +135,7 @@ class BehaviorForm extends React.Component {
                             </div>
                             <br/>
                             <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
-                            <Button as={Link} to={`/sensor/${sensorId}/behaviors`} icon={'arrow left'}
+                            <Button as={Link} to={`/sensor/${sensorId}/manual_behaviors`} icon={'arrow left'}
                                     content={'Go back'}/>
                         </Form>
                     </Segment>

@@ -33,12 +33,12 @@ export default function BehaviorGrid({behavior, deleteBehavior}) {
                 <Segment>
                     <div>
                         <Label color={'grey'}>
-                            {behavior.sourceSensor.name ? behavior.sourceSensor.name : behavior.sourceSensor.uuid}
+                            {behavior.sensor.name ? behavior.sensor.name : behavior.sensor.id}
                         </Label>
                         <Label color={'blue'}>
-                            {getBehaviorDescription(BehaviorConditionsEnumChoices, behavior.sourceCondition)}
+                            {getBehaviorDescription(BehaviorConditionsEnumChoices, behavior.requirement)}
                         </Label>
-                        {getArgument(behavior.sourceArgument)}
+                        {getArgument(behavior.requirementArgument)}
                     </div>
                 </Segment>
             </Grid.Column>
@@ -51,17 +51,17 @@ export default function BehaviorGrid({behavior, deleteBehavior}) {
                 <Segment>
                     <div>
                         <Label color={'grey'}>
-                            {behavior.dependentSensor.name ? behavior.dependentSensor.name : behavior.dependentSensor.uuid}
+                            {behavior.actionSensor.name ? behavior.actionSensor.name : behavior.actionSensor.id}
                         </Label>
                         <Label color={'blue'}>
-                            {getBehaviorDescription(BehaviorActionsEnumChoices, behavior.dependentAction)}
+                            {getBehaviorDescription(BehaviorActionsEnumChoices, behavior.action)}
                         </Label>
                         {getArgument(behavior.actionArgument)}
                     </div>
                 </Segment>
             </Grid.Column>
             <Grid.Column width={2} verticalAlign={'middle'}>
-                <Button as={Link} to={`/sensor/${behavior.sourceSensor.id}/behaviors/edit/${behavior.id}`} primary
+                <Button as={Link} to={`/sensor/${behavior.sensor.id}/behaviors/edit/${behavior.id}`} primary
                         icon={'pencil'}/>
                 <Button icon={'delete'} color="red" onClick={() => {deleteBehavior(behavior)}} />
             </Grid.Column>

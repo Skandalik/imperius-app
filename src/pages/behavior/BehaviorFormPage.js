@@ -26,8 +26,8 @@ class BehaviorFormPage extends React.Component {
     }
 
     prepareBehavior (behavior){
-        behavior.sourceSensor = `/api/sensors/${this.state.sensorId}`;
-        behavior.dependentSensor = `/api/sensors/${behavior.dependentSensor.id}`;
+        behavior.sensor = `/api/sensors/${this.state.sensorId}`;
+        behavior.actionSensor = `/api/sensors/${behavior.actionSensor.id}`;
 
         return behavior;
     };

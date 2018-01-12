@@ -1,13 +1,13 @@
 import {client} from './index';
 
 const sensor_behaviors_url = '/sensors';
-const url = '/behaviors';
+const url = '/manual_behaviors';
 
 export function fetchBehaviors(id) {
     return dispatch => {
         return dispatch({
             type: 'FETCH_BEHAVIORS',
-            payload: client.get(`${sensor_behaviors_url}/${id}/behaviors`)
+            payload: client.get(`${sensor_behaviors_url}/${id}/manual_behaviors`)
         });
     };
 }
