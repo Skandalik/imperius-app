@@ -2,13 +2,13 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {SubmissionError} from 'redux-form';
 import {connect} from 'react-redux';
-import {createBehavior, fetchBehavior, updateBehavior} from '../../actions/BehaviorActions';
-import BehaviorForm from "../../components/behavior/BehaviorForm";
 import {fetchSensor, fetchSensors} from "../../actions/SensorActions";
 import {Dimmer, Loader, Segment} from "semantic-ui-react";
 import {BehaviorConstants} from "../../components/behavior/BehaviorEnum";
+import {createScheduledBehavior, fetchScheduledBehavior, updateScheduledBehavior} from "../../actions/ScheduledBehaviorActions";
+import ScheduledBehaviorForm from "../../components/behavior/ScheduledBehaviorForm";
 
-class BehaviorFormPage extends React.Component {
+class ScheduledBehaviorFormPage extends React.Component {
     state = {
         redirect: false,
         sensorId: this.props.match.params.id,
@@ -17,9 +17,8 @@ class BehaviorFormPage extends React.Component {
 
     componentDidMount() {
         const id = this.props.match.params.behaviorId;
-        console.log(id);
         if (id) {
-            this.props.fetchBehavior(id);
+            this.props.fetchScheduledBehavior(id);
         }
         this.props.fetchSensors();
         this.props.fetchSensor(this.state.sensorId);
@@ -27,7 +26,6 @@ class BehaviorFormPage extends React.Component {
 
     prepareBehavior (behavior){
         behavior.sensor = `/api/sensors/${this.state.sensorId}`;
-        behavior.actionSensor = `/api/sensors/${behavior.actionSensor.id}`;
 
         return behavior;
     };
@@ -39,7 +37,7 @@ class BehaviorFormPage extends React.Component {
 
         if (!behavior.id) {
             return this.props
-                .createBehavior(behavior)
+                .createScheduledBehavior(behavior)
                 .then(response => {
                     this.setState({redirect: true});
                 })
@@ -48,7 +46,7 @@ class BehaviorFormPage extends React.Component {
                 });
         } else {
             return this.props
-                .updateBehavior(behavior)
+                .updateScheduledBehavior(behavior)
                 .then(response => {
                     this.setState({redirect: true});
                 })
@@ -65,11 +63,11 @@ class BehaviorFormPage extends React.Component {
                     <Redirect to={`/sensor/${this.state.sensorId}/behaviors`}/>
                 ) : (
                     <div>
-                        <h1 style={{marginTop: '1em'}}> {this.state.behaviorId ? 'Edit behavior' : 'Add new behavior'}</h1>
-                        <BehaviorForm
+                        <h1 style={{marginTop: '1em'}}> {this.state.behaviorId ? 'Edit scheduled behavior' : 'Add new scheduled behavior'}</h1>
+                        <ScheduledBehaviorForm
                             sensorId={this.state.sensorId}
                             behaviorId={this.state.behaviorId}
-                            behavior={this.props.behavior}
+                            behavior={this.props.scheduledBehavior}
                             loading={this.props.loading}
                             onSubmit={this.submit}
                             sensors={this.props.sensors}
@@ -84,18 +82,18 @@ class BehaviorFormPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        behavior: state.behaviorStore.behavior,
-        errors: state.behaviorStore.errors,
-        loading: state.behaviorStore.loading,
+        scheduledBehavior: state.scheduledBehaviorStore.scheduledBehavior,
+        errors: state.scheduledBehaviorStore.errors,
+        loading: state.scheduledBehaviorStore.loading,
         sensorLoading: state.sensorStore.loading,
         sensors: state.sensorStore.sensors,
     };
 }
 
 export default connect(mapStateToProps, {
-    createBehavior,
-    updateBehavior,
-    fetchBehavior,
+    createScheduledBehavior,
+    updateScheduledBehavior,
+    fetchScheduledBehavior,
     fetchSensors,
     fetchSensor,
-})(BehaviorFormPage);
+})(ScheduledBehaviorFormPage);

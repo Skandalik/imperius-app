@@ -2,12 +2,14 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import SensorReducer from './SensorReducer';
 import RoomReducer from './RoomReducer';
-import BehaviorReducer from "./BehaviorReducer";
+import ManualBehaviorReducer from "./ManualBehaviorReducer";
+import ScheduledBehaviorReducer from "./ScheduledBehaviorReducer";
 
 const reducers = {
     sensorStore: SensorReducer,
     roomStore: RoomReducer,
-    behaviorStore: BehaviorReducer,
+    manualBehaviorStore: ManualBehaviorReducer,
+    scheduledBehaviorStore: ScheduledBehaviorReducer,
     form: formReducer
 };
 

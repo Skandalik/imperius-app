@@ -15,6 +15,16 @@ export const BehaviorActionsEnumChoices = {
     'set': 'SET',
 };
 
+export const ScheduledDayEnumChoices = {
+    'monday': 'Monday',
+    'tuesday': 'Tuesday',
+    'Wednesday': 'Wednesday',
+    'Thursday': 'Thursday',
+    'Friday': 'Friday',
+    'Saturday': 'Saturday',
+    'Sunday': 'Sunday',
+};
+
 export const BehaviorActionsFetchableEnumChoices = {
     'turn_off': 'TURN OFF',
     'turn_on': 'TURN ON',
@@ -66,7 +76,7 @@ export const BehaviorConditionsSwitchableEnumChoices = {
     'smaller_equals_than': 'STATUS IS SMALLER OR EQUALS ',
 };
 
-export const BehaviorConditionsEnumChoices = {
+export const BehaviorRequirementsEnumChoices = {
     'is_off': 'IS TURNED OFF',
     'is_on': 'IS TURNED ON',
     'equals': 'STATUS EQUALS',

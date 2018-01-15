@@ -39,3 +39,7 @@ body {
   padding: 10px;
   background-color: #2ecc71;
 }
+
+.no-margin {
+  margin-bottom: 0 !important;
+}

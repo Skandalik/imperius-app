@@ -1,20 +1,22 @@
 import React from 'react';
-import {Button, Form, Grid, Segment} from 'semantic-ui-react';
+import {Button, Checkbox, Form, Grid, Segment} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
 import classnames from 'classnames';
 import Link from "react-router-dom/es/Link";
+import $ from 'jquery';
 import {
     BehaviorActionsEnum,
     BehaviorActionsEnumChoices,
-    BehaviorConditionsEnumChoices, BehaviorConditionsSwitchableEnumChoices, BehaviorCondititionsFetchableEnumChoices,
-    BehaviorFetchableSwitchableConditions
+    BehaviorRequirementsEnumChoices, BehaviorConditionsSwitchableEnumChoices, BehaviorCondititionsFetchableEnumChoices,
+    BehaviorFetchableSwitchableConditions, ScheduledDayEnumChoices
 } from "./BehaviorEnum";
+import {CheckboxField} from "react-semantic-redux-form";
 
-class BehaviorForm extends React.Component {
+class ScheduledBehaviorForm extends React.Component {
     state = {
-        sourceInputHidden: true,
         dependentInputHidden: true,
-    };
+        specificDateChecked: false,
+    }
     renderField = ({input, hidden, label, type, meta: {touched, error}}) => (
         <Form.Field hidden={hidden} disabled={hidden} className={classnames({error: touched && error})}>
             <input {...input} placeholder={label} type={type}/>
@@ -44,7 +46,8 @@ class BehaviorForm extends React.Component {
                     return;
                 }
                 return (
-                    <option key={sensor.id} value={sensor.id}>{sensor.id} - {sensor.name ? sensor.name : sensor.uuid}</option>
+                    <option key={sensor.id}
+                            value={sensor.id}>{sensor.id} - {sensor.name ? sensor.name : sensor.uuid}</option>
                 );
 
             }
@@ -79,12 +82,12 @@ class BehaviorForm extends React.Component {
         })
     };
 
-    getOptionsBasedOnProperty(sensor) {
-        if (sensor.fetchable) {
-            return this.getBehaviorOptions(BehaviorCondititionsFetchableEnumChoices);
-        }
-        return this.getBehaviorOptions(BehaviorConditionsSwitchableEnumChoices);
-    }
+    handleToggleChange = (e, {checked}) => {
+        this.setState({
+            specificDateChecked: checked
+        })
+    };
+
 
     render() {
         const parse = value => value === undefined ? undefined : parseInt(value, 10);
@@ -94,30 +97,36 @@ class BehaviorForm extends React.Component {
             <Grid centered columns={2}>
                 <Grid.Column>
                     <Segment>
+                        <h1>For sensor with ID: {sensorId}</h1>
                         <Form onSubmit={handleSubmit} loading={loading} style={padding}>
-                            <h1>IF THIS SENSOR</h1>
-                            <div>
-                                <Field name={'requirement'} type={'select'} component={'select'}
-                                       className={'ui dropdown'} onChange={(event) => this.onSourceStatusChange(event)}>
-                                    <option>- Choose condition -</option>
-                                    {this.getBehaviorOptions(BehaviorConditionsEnumChoices)}
-                                </Field>
+                            <Checkbox label={'Set specific date'} defaultChecked={this.state.specificDateChecked}
+                                      onChange={this.handleToggleChange}/>
+                            <Field
+                                hidden={!this.state.specificDateChecked}
+                                name={'date'}
+                                type={'date'}
+                                component={this.renderField}
+                            />
+                            <div hidden={this.state.specificDateChecked}>
                                 <Field
-                                    parse={parse}
-                                    hidden={this.state.sourceInputHidden}
-                                    name={'requirementArgument'}
-                                    type={'number'}
-                                    component={this.renderField}
-                                    label={'Value for status condition'}
+                                    name={'repeatable'}
+                                    label={'Repeat'}
+                                    component={CheckboxField}
                                 />
-                            </div>
-                            <h1>THEN SENSOR</h1>
-                            <div>
-                                <Field name={'actionSensor.id'} type={'select'} component={'select'}
+                                <Field name={'relativeDate'} type={'select'} component={'select'}
                                        className={'ui dropdown'}>
-                                    <option>- Choose sensor -</option>
-                                    {this.sensors()}
+                                    <option value={'tomorrow'}>Tomorrow</option>
+                                    {this.getBehaviorOptions(ScheduledDayEnumChoices)}
                                 </Field>
+                            </div>
+                            <Field
+                                name={'time'}
+                                type={'time'}
+                                component={this.renderField}
+                            />
+                            <br/>
+                            <h1>USE THIS ACTION</h1>
+                            <div>
                                 <Field name={'action'} type={'select'} component={'select'}
                                        className={'ui dropdown'}
                                        onChange={(event) => this.onDependentStatusChange(event)}>
@@ -135,7 +144,7 @@ class BehaviorForm extends React.Component {
                             </div>
                             <br/>
                             <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
-                            <Button as={Link} to={`/sensor/${sensorId}/manual_behaviors`} icon={'arrow left'}
+                            <Button as={Link} to={`/sensor/${sensorId}/behaviors`} icon={'arrow left'}
                                     content={'Go back'}/>
                         </Form>
                     </Segment>
@@ -152,9 +161,9 @@ const
         return errors;
     };
 
-export default reduxForm({form: 'behavior', validate})
+export default reduxForm({form: 'scheduledBehavior', validate})
 
 (
-    BehaviorForm
+    ScheduledBehaviorForm
 )
 ;

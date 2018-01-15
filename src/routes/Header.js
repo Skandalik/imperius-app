@@ -9,18 +9,11 @@ class Header extends React.Component {
     render() {
         const {activeItem} = this.state;
         return (
-            <Menu fixed='top' size='large'>
+            <Menu fixed='top' size='large' stackable={true}>
                 <Menu.Item header> Imperius Project</Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item as={Link} to='/overview' name='overview' active={activeItem === 'overview'}
                                onClick={this.handleClickItem}/>
-                    <Dropdown item text='Language'>
-                        <Dropdown.Menu>
-                            <Dropdown.Item>English</Dropdown.Item>
-                            <Dropdown.Item>Russian</Dropdown.Item>
-                            <Dropdown.Item>Spanish</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
                     <Menu.Item as={Link} to='/sensor' name='sensor' active={activeItem === 'sensor'}
                                onClick={this.handleClickItem}/>
                     <Menu.Item as={Link} to='/room' name='room' active={activeItem === 'room'}
