@@ -18,6 +18,8 @@ class Header extends React.Component {
                                onClick={this.handleClickItem}/>
                     <Menu.Item as={Link} to='/room' name='room' active={activeItem === 'room'}
                                onClick={this.handleClickItem}/>
+                    <Menu.Item as={Link} to='/job' name='job' active={activeItem === 'job'}
+                               onClick={this.handleClickItem}/>
                 </Menu.Menu>
             </Menu>
         )
