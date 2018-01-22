@@ -3,15 +3,8 @@ import {Route, Switch} from 'react-router-dom';
 import RoomFormPage from '../../pages/room/RoomFormPage';
 import JobListPage from "../../pages/job/JobListPage";
 import history from "../../history";
-import {isLogged} from "../../utils/auth/AuthService";
 
 class RoomRoutes extends React.Component {
-    componentWillMount() {
-        if (!isLogged()) {
-            history.push('/login');
-        }
-    }
-
     render() {
         return (
             <div>

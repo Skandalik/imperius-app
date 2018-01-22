@@ -5,16 +5,8 @@ import SensorFormPage from "../../pages/sensor/SensorFormPage";
 import BehaviorsPage from "../../pages/behavior/BehaviorsPage";
 import ManualBehaviorFormPage from "../../pages/behavior/ManualBehaviorFormPage";
 import ScheduledBehaviorFormPage from "../../pages/behavior/ScheduledBehaviorFormPage";
-import {isLogged} from "../../utils/auth/AuthService";
-import history from '../../history';
 
 class SensorRoutes extends React.Component {
-    componentWillMount() {
-        if (!isLogged()) {
-            history.push('/login');
-        }
-    }
-
     render() {
         return (
             <div>

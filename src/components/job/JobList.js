@@ -1,6 +1,5 @@
 import React from 'react';
 import {Grid, Segment, Dimmer, Loader, Icon} from 'semantic-ui-react';
-import JobGridRow from "./JobGridRow";
 import JobCard from "./JobCard";
 
 export default function JobList({jobs, loading, runJob, stopJob}) {

@@ -1,3 +1,10 @@
+export function getFromStorageOnce(key) {
+    let value = localStorage.getItem(key);
+    removeFromStorage(key);
+
+    return value;
+}
+
 export function getFromStorage(key) {
     return localStorage.getItem(key);
 }
@@ -6,7 +13,7 @@ export function setInStorage(key, value) {
     localStorage.setItem(key, value);
 }
 
-export function removeFromStorate(key) {
+export function removeFromStorage(key) {
     return localStorage.removeItem(key);
 }
 

@@ -5,7 +5,8 @@ import LoginForm from "../../components/authentication/LoginForm";
 import history from '../../history';
 import {setToken, isLogged} from "../../utils/auth/AuthService";
 import {SubmissionError} from "redux-form";
-import {Segment} from "semantic-ui-react";
+import {Message, Segment} from "semantic-ui-react";
+import {existInStorage, getFromStorageOnce, removeFromStorage} from "../../utils/messages/MessageService";
 
 class LoginPage extends React.Component {
     componentWillMount() {
@@ -29,6 +30,19 @@ class LoginPage extends React.Component {
         return (
             <div>
                 <h1>Login to manage your sensors</h1>
+                {
+                    existInStorage('message') ?
+                        <div>
+                            <Message
+                                color={'red'}
+                                icon='attention'
+                                header='Error!'
+                                content={getFromStorageOnce('message')}
+                            />
+                            {removeFromStorage('message')}
+                        </div>
+                        : ''
+                }
                 <Segment>
                     <LoginForm
                         loading={this.props.loading}

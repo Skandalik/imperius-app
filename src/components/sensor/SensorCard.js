@@ -1,11 +1,27 @@
 import React from 'react';
-import {Button, Card, Dimmer, Divider, Icon, Loader, Segment} from 'semantic-ui-react';
+import {Button, Card, Dimmer, Divider, Icon, Label, Loader, Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Slider from 'react-rangeslider';
 
 export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, deleteSensor, setValue, setStateSensor}) {
+    const checkRoomAndNameSet = () => {
+        if (!sensor.name || !sensor.room) {
+            if (!sensor.room && !sensor.name) {
+                return <Label attached='top'>No name and room set!</Label>;
+            }
+            if (!sensor.room) {
+                return <Label attached='top'>No room set!</Label>;
+            }
+            if (!sensor.name) {
+                return <Label attached='top'>No name set!</Label>;
+            }
+        }
+        return '';
+    };
+
     return (
         <Card>
+            {checkRoomAndNameSet()}
             <Segment className={'no-margin'} inverted={true} color={sensor.active ? 'green' : 'red'}
                      textAlign={'center'}>
                 {sensor.active ? 'ACTIVE' : 'INACTIVE'}

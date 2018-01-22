@@ -10,3 +10,12 @@ export function login(user) {
         });
     };
 }
+
+export function checkAuthorization() {
+    return dispatch => {
+        return dispatch({
+            type: 'CHECK_AUTH',
+            payload: getClient().post()
+        });
+    };
+}

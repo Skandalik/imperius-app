@@ -30,6 +30,14 @@ export default (state = defaultState, action = {}) => {
                 errors: action.payload.response.data
             };
         }
+        case 'CHECK_AUTH_REJECTED': {
+            return {
+                ...state,
+                loading: false,
+                authenticated: false,
+                errors: action.payload.response.data
+            };
+        }
         default:
             return state;
     }
