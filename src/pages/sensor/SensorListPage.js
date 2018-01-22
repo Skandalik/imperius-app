@@ -10,6 +10,7 @@ import {
 } from '../../actions/SensorActions';
 import ReactInterval from 'react-interval';
 import {setValue} from "../../actions/HelperActions";
+import {getToken} from "../../utils/auth/AuthService";
 
 class SensorListPage extends React.Component {
     componentDidMount() {
@@ -17,6 +18,7 @@ class SensorListPage extends React.Component {
     }
 
     render() {
+        console.log(getToken());
         return (
             <div>
                 <ReactInterval

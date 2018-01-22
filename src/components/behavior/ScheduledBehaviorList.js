@@ -1,6 +1,5 @@
 import React from 'react';
-import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
-import {Dimmer, Grid, Loader} from "semantic-ui-react";
+import {Grid} from "semantic-ui-react";
 import ScheduledBehaviorGridRow from "./ScheduledBehaviorGridRow";
 
 export default function ScheduledBehaviorList({behaviors, deleteBehavior}) {

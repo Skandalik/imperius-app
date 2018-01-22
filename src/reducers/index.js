@@ -5,6 +5,7 @@ import RoomReducer from './RoomReducer';
 import ManualBehaviorReducer from "./ManualBehaviorReducer";
 import ScheduledBehaviorReducer from "./ScheduledBehaviorReducer";
 import JobReducer from "./JobReducer";
+import AuthReducer from "./AuthReducer";
 
 const reducers = {
     sensorStore: SensorReducer,
@@ -12,6 +13,7 @@ const reducers = {
     manualBehaviorStore: ManualBehaviorReducer,
     scheduledBehaviorStore: ScheduledBehaviorReducer,
     jobStore: JobReducer,
+    authStore: AuthReducer,
     form: formReducer
 };
 

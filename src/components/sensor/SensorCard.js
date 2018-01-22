@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    Button, Card, Container, Dimmer, Divider, Grid, Icon, Label, Loader, Segment,
-    Statistic
-} from 'semantic-ui-react';
+import {Button, Card, Dimmer, Divider, Icon, Loader, Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Slider from 'react-rangeslider';
 

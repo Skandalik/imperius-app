@@ -1,4 +1,4 @@
-import {client} from './index';
+import {getClient} from './index';
 
 const url = '/rooms';
 
@@ -6,7 +6,7 @@ export function fetchRooms() {
     return dispatch => {
         return dispatch({
             type: 'FETCH_ROOMS',
-            payload: client.get(url)
+            payload: getClient().get(url)
         });
     };
 }
@@ -15,7 +15,7 @@ export function fetchRoom(id) {
     return dispatch => {
         return dispatch({
             type: 'FETCH_ROOM',
-            payload: client.get(`${url}/${id}`)
+            payload: getClient().get(`${url}/${id}`)
         });
     };
 }
@@ -24,7 +24,7 @@ export function createRoom(room) {
     return dispatch => {
         return dispatch({
             type: 'CREATE_ROOM',
-            payload: client.post(url, room)
+            payload: getClient().post(url, room)
         });
     };
 }
@@ -33,7 +33,7 @@ export function updateRoom(room) {
     return dispatch => {
         return dispatch({
             type: 'UPDATE_ROOM',
-            payload: client.put(`${url}/${room.id}`, room)
+            payload: getClient().put(`${url}/${room.id}`, room)
         });
     };
 }
@@ -45,7 +45,7 @@ export function deleteRoom(room) {
             meta: {
                 roomObject: room
             },
-            payload: client.delete(`${url}/${room.id}`)
+            payload: getClient().delete(`${url}/${room.id}`)
         });
     };
 }

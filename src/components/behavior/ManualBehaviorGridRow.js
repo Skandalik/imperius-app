@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, Dimmer, Grid, Icon, Label, List, Loader, Segment} from 'semantic-ui-react';
+import {Button, Dimmer, Grid, Label, List, Loader, Segment} from 'semantic-ui-react';
 import {Link} from "react-router-dom";
-import {BehaviorActionsEnumChoices, BehaviorRequirementsEnumChoices, BehaviorConstants} from "./BehaviorEnum";
+import {BehaviorActionsEnumChoices, BehaviorConstants, BehaviorRequirementsEnumChoices} from "./BehaviorEnum";
 
 export default function ManualBehaviorGridRow({behavior, deleteBehavior}) {
 
@@ -41,7 +41,7 @@ export default function ManualBehaviorGridRow({behavior, deleteBehavior}) {
                             THEN
                         </Label>
                         <Label color={'grey'}>
-                            {behavior.sensor.name ? behavior.sensor.name : behavior.sensor.uuid}
+                            {behavior.actionSensor.name ? behavior.actionSensor.name : behavior.actionSensor.uuid}
                         </Label>
                         <Label color={'blue'}>
                             {getBehaviorDescription(BehaviorActionsEnumChoices, behavior.action)}

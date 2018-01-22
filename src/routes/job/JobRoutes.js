@@ -1,8 +1,8 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import RoomListPage from '../../pages/room/RoomListPage';
+import {Route, Switch} from 'react-router-dom';
 import RoomFormPage from '../../pages/room/RoomFormPage';
 import JobListPage from "../../pages/job/JobListPage";
+
 class RoomRoutes extends React.Component {
   render() {
     return (
