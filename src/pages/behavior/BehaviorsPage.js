@@ -71,7 +71,7 @@ class BehaviorsPage extends React.Component {
             <div>
                 <h2>Behaviors for sensor</h2>
                 <Button primary disabled={this.props.loading} as={Link}
-                        to={`/sensor/${this.props.sensor.id}/${this.state.activeItem}/add`} icon={'plus'}
+                        to={`/sensor/${this.state.sensorId}/${this.state.activeItem}/add`} icon={'plus'}
                         content={'Add new behavior'}/>
                 <Button as={Link} to={'/sensor'} icon={'arrow left'}
                         content={'Go back'}/>
