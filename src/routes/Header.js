@@ -5,7 +5,7 @@ import {isLogged, removeToken} from "../utils/auth/AuthService";
 import history from '../history';
 
 class Header extends React.Component {
-    state = {};
+    state = { activeItem: 'sensor' };
     handleClickItem = (e, {name}) => this.setState({activeItem: name});
 
     handleLogout = () => {
@@ -26,6 +26,8 @@ class Header extends React.Component {
                             <Menu.Item as={Link} to='/room' name='room' active={activeItem === 'room'}
                                        onClick={this.handleClickItem}/>
                             <Menu.Item as={Link} to='/job' name='job' active={activeItem === 'job'}
+                                       onClick={this.handleClickItem}/>
+                            <Menu.Item as={Link} to='/profile' name='profile' active={activeItem === 'profile'}
                                        onClick={this.handleClickItem}/>
                             <Menu.Item name='logout' active={activeItem === 'logout'}
                                        onClick={this.handleLogout}/>

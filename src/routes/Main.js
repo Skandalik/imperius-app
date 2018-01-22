@@ -7,6 +7,7 @@ import LoginPage from "../pages/login/LoginPage";
 import MainPage from "../pages/MainPage";
 import NotFound from "../pages/NotFound";
 import Authorized from "./Authorized";
+import ProfilePage from "../pages/ProfilePage";
 
 class Main extends Component {
     render() {
@@ -15,6 +16,7 @@ class Main extends Component {
                 <Switch>
                     <Route path="/" exact component={MainPage} key="main_page"/>
                     <Route path="/login" exact component={LoginPage} key="login"/>
+                    <Route path="/profile" exact component={ProfilePage} key="password"/>
                     <Route component={Authorized} key="authorized"/>
                     <Route path="*" component={NotFound} key="not_found"/>
                 </Switch>

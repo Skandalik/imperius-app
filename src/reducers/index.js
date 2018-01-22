@@ -6,6 +6,7 @@ import ManualBehaviorReducer from "./ManualBehaviorReducer";
 import ScheduledBehaviorReducer from "./ScheduledBehaviorReducer";
 import JobReducer from "./JobReducer";
 import AuthReducer from "./AuthReducer";
+import ProfileReducer from "./ProfileReducer";
 
 const reducers = {
     sensorStore: SensorReducer,
@@ -14,6 +15,7 @@ const reducers = {
     scheduledBehaviorStore: ScheduledBehaviorReducer,
     jobStore: JobReducer,
     authStore: AuthReducer,
+    profileStore: ProfileReducer,
     form: formReducer
 };
 
