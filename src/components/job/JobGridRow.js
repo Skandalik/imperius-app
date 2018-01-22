@@ -64,13 +64,6 @@ export default function JobGridGridRow({job, deleteJob, runJob}) {
             <Grid.Column width={4} verticalAlign={'middle'}>
                 <Button color={'green'} icon={'play'} onClick={() => {
                     runJob(job)}} />
-                <div className='ui two buttons'>
-                    <Button as={Link} to={`/job/edit/${job.id}`} primary
-                            icon={'pencil'}/>
-                    <Button icon={'delete'} color="red" onClick={() => {
-                        deleteJob(job)
-                    }}/>
-                </div>
             </Grid.Column>
         </Grid.Row>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import JobList from '../../components/job/JobList';
-import {fetchJobs, deleteJob, runJob} from '../../actions/JobActions';
+import {fetchJobs, stopJob, runJob} from '../../actions/JobActions';
 import Link from 'react-router-dom/Link';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon/Icon';
 
@@ -13,15 +13,14 @@ class JobListPage extends React.Component {
     render() {
         return (
             <div>
-                <h2>Manage your jobs</h2>
-                <Link to={'/job/create'} className='primary ui button'><Icon className='plus'/>Add new Job </Link>
+                <h2>Check and manage jobs</h2>
                 <br />
                 <br />
                 <JobList
                     jobs={this.props.jobs}
                     loading={this.props.loading}
-                    deleteJob={this.props.deleteJob}
                     runJob={this.props.runJob}
+                    stopJob={this.props.stopJob}
                 />
             </div>
         );
@@ -35,4 +34,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {runJob, fetchJobs, deleteJob })(JobListPage);
+export default connect(mapStateToProps, {runJob, fetchJobs, stopJob})(JobListPage);

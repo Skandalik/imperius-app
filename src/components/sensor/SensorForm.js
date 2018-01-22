@@ -46,7 +46,8 @@ class SensorForm extends React.Component {
                         <div>
                             <label>Set room where sensor is/will be</label>
                             <div>
-                                <Field name="room" type='select' component="select">
+                                <Field name="room" type='select' component="select" className={'ui dropdown'}>
+                                    <option>- Choose room -</option>
                                     {this.roomOptions()}
                                 </Field>
                             </div>

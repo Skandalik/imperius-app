@@ -10,7 +10,7 @@ export default function SensorList({sensors, loading, deleteSensor, checkStatusS
     const cards = () => {
         return sensors.map(sensor => {
             return (
-                <Grid.Column key={sensor.id}>
+                <Grid.Column key={sensor.id} mobile={16} tablet={8} computer={5}>
                     <SensorCard
                         key={sensor.id}
                         sensor={sensor}
@@ -37,7 +37,7 @@ export default function SensorList({sensors, loading, deleteSensor, checkStatusS
                     ? ''
                     : <h1><Icon name={'delete'} /> No sensor found. Perhaps you'd like to add one?</h1>
                 }
-                <Grid stackable={true} relaxed columns={3}>
+                <Grid stackable={true} doubling={true} centered={true} relaxed columns={3}>
                     {cards()}
                 </Grid>
             </Segment>

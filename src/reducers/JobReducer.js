@@ -103,6 +103,26 @@ export default (state = defaultState, action = {}) => {
                 ),
             };
         }
+        case 'STOP_JOB_PENDING': {
+            let job = action.meta.jobObject
+            job.loading = true
+            return {
+                ...state,
+                jobs: state.jobs.map(
+                    item => (item.id === job.id ? job: item)
+                )
+            };
+        }
+        case 'STOP_JOB_FULFILLED': {
+            let job = action.payload.action.payload.data
+            job.loading = false
+            return {
+                ...state,
+                jobs: state.jobs.map(
+                    item => (item.id === job.id ? job : item)
+                ),
+            };
+        }
         default:
             return state;
     }

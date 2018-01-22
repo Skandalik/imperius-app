@@ -34,6 +34,20 @@ export function runJob(job) {
     };
 }
 
+export function stopJob(job) {
+    return dispatch => {
+        return dispatch({
+            type: 'STOP_JOB',
+            meta: {
+                jobObject: job
+            },
+            payload: getClient().get(`${url}/${job.id}/stop`).then(function (response) {
+                return dispatch(fetchJob(job.id))
+            })
+        });
+    };
+}
+
 export function createJob(job) {
     return dispatch => {
         return dispatch({
