@@ -46,6 +46,8 @@ class ProfileForm extends React.Component {
                             label="Password"
                         />
                         <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
+                        <Button as={Link} to={`/sensor`} icon={'arrow left'}
+                                content={'Go back'}/>
                     </Form>
                 </Grid.Column>
             </Grid>
