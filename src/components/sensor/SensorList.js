@@ -29,7 +29,7 @@ export default function SensorList({sensors, loading, deleteSensor, checkStatusS
     const minHeight = {minHeight: 200, width: 'auto', margin: 'auto 0'};
     return (
         <div>
-            <Segment centered='true' style={minHeight}>
+            <Segment textAlign={'center'} style={minHeight}>
                 <Dimmer inverted active={loading}>
                     <Loader inverted content='Loading sensors...'/>
                 </Dimmer>

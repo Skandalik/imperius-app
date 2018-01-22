@@ -22,13 +22,13 @@ export default function JobList({jobs, loading, runJob, stopJob}) {
     const minHeight = {minHeight: 200, width: 'auto', margin: 'auto 0'};
     return (
         <div>
-            <Segment centered='true' style={minHeight}>
+            <Segment textAlign={'center'} style={minHeight}>
                 <Dimmer inverted active={loading}>
                     <Loader inverted content='Loading jobs...'/>
                 </Dimmer>
                 {jobs && jobs.length > 0
                     ? ''
-                    : <h1><Icon name={'delete'}/> No job found. Perhaps you'd like to add one?</h1>
+                    : <h1><Icon name={'delete'}/> No jobs found. Perhaps you'd like to add one?</h1>
                 }
                 <Grid stackable={true} centered={true} relaxed columns={2}>
                     {columns()}

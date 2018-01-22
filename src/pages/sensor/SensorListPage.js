@@ -11,14 +11,46 @@ import {
 import ReactInterval from 'react-interval';
 import {setValue} from "../../actions/HelperActions";
 import {getToken} from "../../utils/auth/AuthService";
+import {Button, Message} from "semantic-ui-react";
+import {
+    getFromStorage,
+    handleShowMessage,
+    existInStorage, isFalse
+} from "../../utils/messages/MessageService";
 
 class SensorListPage extends React.Component {
+    state = {
+        visible: true
+    }
+
+    componentWillMount() {
+        if (!existInStorage('sensorInfoVisible')) {
+            handleShowMessage();
+            this.setState({visible : true});
+        }
+
+        if (getFromStorage('sensorInfoVisible') === '0') {
+            this.setState({visible : false});
+        } else {
+            this.setState({visible : true});
+        }
+    }
+
     componentDidMount() {
         this.props.fetchSensors();
     }
 
+    handleDismiss = () => {
+        this.setState({visible : false});
+        localStorage.setItem('sensorInfoVisible', '0');
+    };
+
+    handleShowMessage = () => {
+        this.setState({visible : true});
+        localStorage.setItem('sensorInfoVisible', '1');
+    };
+
     render() {
-        console.log(getToken());
         return (
             <div>
                 <ReactInterval
@@ -28,6 +60,27 @@ class SensorListPage extends React.Component {
                 />
 
                 <h2>Manage your sensors</h2>
+
+                {this.state.visible ?
+                    <Message
+                        onDismiss={this.handleDismiss}
+                        color={'green'}
+                        icon='info circle'
+                        header='Sensor adding information'
+                        content='Your home sensors are added automatically. Just run "Sensors scan" job in Jobs tab and power on your sensor!'
+                    /> : ''
+                }
+
+                {!this.state.visible ?
+                    <div>
+                        <Button onClick={this.handleShowMessage} content={'Information'} color={'red'}
+                                icon={'info circle'}/>
+                        <br/>
+                    </div>
+                    : ''}
+
+                <br/>
+                <br/>
                 <SensorList
                     sensors={this.props.sensors}
                     loading={this.props.loading}

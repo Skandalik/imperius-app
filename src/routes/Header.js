@@ -21,8 +21,6 @@ class Header extends React.Component {
                 {
                     isLogged() ?
                         <Menu.Menu position='right'>
-                            <Menu.Item as={Link} to='/overview' name='overview' active={activeItem === 'overview'}
-                                       onClick={this.handleClickItem}/>
                             <Menu.Item as={Link} to='/sensor' name='sensor' active={activeItem === 'sensor'}
                                        onClick={this.handleClickItem}/>
                             <Menu.Item as={Link} to='/room' name='room' active={activeItem === 'room'}

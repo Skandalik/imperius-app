@@ -8,11 +8,15 @@ import {SubmissionError} from "redux-form";
 import {Segment} from "semantic-ui-react";
 
 class LoginPage extends React.Component {
+    componentWillMount() {
+        if (isLogged()) {
+            history.push('/sensor');
+        }
+    }
     submit = user => {
         return this.props
             .login(user)
             .then(response => {
-                console.log(response.value.data.token)
                 setToken(response.value.data.token);
                 history.push('/sensor')
             })

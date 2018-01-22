@@ -57,10 +57,10 @@ const validate = values => {
     const errors = {};
     if (!values.room) {
         errors.room = {
-            message: 'You need to provide valid room name!'
+            message: 'You need to provide a valid room name!'
         };
     }
-    if (!values.floor) {
+    if (values.floor.toString().length === 0) {
         errors.floor = {
             message: 'You need to provide a floor'
         };

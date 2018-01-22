@@ -2,16 +2,18 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {deleteManualBehavior, fetchManualBehaviors} from "../../actions/ManualBehaviorActions";
 import {deleteScheduledBehavior, fetchScheduledBehaviors} from "../../actions/ScheduledBehaviorActions";
-import {Button, Dimmer, Icon, Loader, Menu, Segment} from "semantic-ui-react";
+import {Button, Dimmer, Icon, Loader, Menu, Message, Segment} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import {fetchSensor} from "../../actions/SensorActions";
 import ScheduledBehaviorList from "../../components/behavior/ScheduledBehaviorList";
 import ManualBehaviorList from "../../components/behavior/ManualBehaviorList";
+import {existInStorage, setInStorage} from "../../utils/messages/MessageService";
 
 class BehaviorsPage extends React.Component {
     state = {
         sensorId: this.props.match.params.id,
-        activeItem: 'manual_behaviors'
+        activeItem: 'manual_behaviors',
+        visible: true
     };
 
     handleItemClick = (e, {name}) => {
@@ -36,6 +38,24 @@ class BehaviorsPage extends React.Component {
         }
     };
 
+
+    handleDismiss = () => {
+        this.setState({visible: false});
+        localStorage.setItem('sensorInfoVisible', '0');
+    };
+
+    handleShowMessage = () => {
+        this.setState({visible: true});
+        localStorage.setItem('sensorInfoVisible', '1');
+    };
+
+    componentWillMount() {
+        if (existInStorage('behaviorInfoVisible')) {
+            setInStorage('behaviorInfoVisible', '1')
+            this.setState({visible: true});
+        }
+    }
+
     componentDidMount() {
         const id = this.state.sensorId;
         if (id) {
@@ -57,6 +77,29 @@ class BehaviorsPage extends React.Component {
                         content={'Go back'}/>
                 <br/>
                 <br/>
+                {this.state.activeItem === 'scheduled_behaviors' ?
+                    <div>
+                        {
+                            this.state.visible ?
+                                <Message
+                                    onDismiss={this.handleDismiss}
+                                    color={'green'}
+                                    icon='info circle'
+                                    header='Scheduled behavior information'
+                                    content='Behavior actions you added will not work unless you run "Scheduled jobs" job under Job tab.'
+                                /> : ''
+                        }
+
+                        {!this.state.visible ?
+                            <div>
+                                <Button onClick={this.handleShowMessage} content={'Information'} color={'red'}
+                                        icon={'info circle'}/>
+                                <br/>
+                            </div>
+                            : ''}
+                    </div>
+                    : ''
+                }
                 <Menu attached='top' tabular>
                     <Menu.Item name='manual_behaviors' active={this.state.activeItem === 'manual_behaviors'}
                                onClick={this.handleItemClick}/>
