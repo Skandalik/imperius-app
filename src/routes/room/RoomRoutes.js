@@ -1,7 +1,8 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import RoomListPage from '../../pages/room/RoomListPage';
 import RoomFormPage from '../../pages/room/RoomFormPage';
+import NotFound from "../../pages/NotFound";
 
 class RoomRoutes extends React.Component {
     render() {
@@ -11,6 +12,7 @@ class RoomRoutes extends React.Component {
                     <Route path="/room" component={RoomListPage} exact key="room_list"/>
                     <Route path="/room/create" component={RoomFormPage} key="room_create"/>
                     <Route path="/room/edit/:id" component={RoomFormPage} key="room_edit"/>
+                    <Route path="/room/*" component={NotFound} key="not_found"/>
                 </Switch>
             </div>
         );

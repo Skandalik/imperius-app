@@ -1,10 +1,11 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import SensorListPage from '../../pages/sensor/SensorListPage';
 import SensorFormPage from "../../pages/sensor/SensorFormPage";
 import BehaviorsPage from "../../pages/behavior/BehaviorsPage";
 import ManualBehaviorFormPage from "../../pages/behavior/ManualBehaviorFormPage";
 import ScheduledBehaviorFormPage from "../../pages/behavior/ScheduledBehaviorFormPage";
+import NotFound from "../../pages/NotFound";
 
 class SensorRoutes extends React.Component {
     render() {
@@ -22,6 +23,7 @@ class SensorRoutes extends React.Component {
                            key="sensor_manual_behavior_edit"/>
                     <Route path="/sensor/:id/scheduled_behaviors/edit/:behaviorId" component={ScheduledBehaviorFormPage}
                            key="sensor_scheduled_behavior_edit"/>
+                    <Route path="/sensor/*" component={NotFound} key="not_found"/>
                 </Switch>
             </div>
         );

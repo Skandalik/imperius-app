@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
                         />
                         <Field
                             name="password"
-                            type="text"
+                            type="password"
                             component={this.renderField}
                             label="Password"
                         />

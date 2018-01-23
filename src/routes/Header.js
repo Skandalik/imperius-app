@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Menu, Dropdown} from 'semantic-ui-react';
+import {Menu} from 'semantic-ui-react';
 import {isLogged, removeToken} from "../utils/auth/AuthService";
 import history from '../history';
 
@@ -17,7 +17,7 @@ class Header extends React.Component {
         const {activeItem} = this.state;
         return (
             <Menu fixed='top' size='large' stackable={true}>
-                <Menu.Item header> Imperius Project</Menu.Item>
+                <Menu.Item as={Link} to={'/'} header> Imperius Project</Menu.Item>
                 {
                     isLogged() ?
                         <Menu.Menu position='right'>

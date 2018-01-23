@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import SensorRoutes from '../routes/sensor/SensorRoutes';
 import RoomRoutes from '../routes/room/RoomRoutes';
 import JobRoutes from "./job/JobRoutes";
 import history from "../history";
 import {isLogged, removeToken} from "../utils/auth/AuthService";
-import {login, checkAuthorization} from "../actions/AuthActions";
+import {checkAuthorization, login} from "../actions/AuthActions";
 import {connect} from "react-redux";
 import NotFound from "../pages/NotFound";
 
@@ -20,7 +20,7 @@ class Authorized extends Component {
     }
 
     render() {
-        if (this.props.errors ) {
+        if (this.props.errors) {
             removeToken();
             localStorage.setItem('message', 'Your authentication token has expired!');
             history.push('/login');

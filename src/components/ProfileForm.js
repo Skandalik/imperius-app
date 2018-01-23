@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Grid, Message} from 'semantic-ui-react';
+import {Button, Form, Grid} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
 import classnames from 'classnames';
 import {Link} from 'react-router-dom';
@@ -41,7 +41,7 @@ class ProfileForm extends React.Component {
                         />
                         <Field
                             name="password"
-                            type="text"
+                            type="password"
                             component={this.renderField}
                             label="Password"
                         />

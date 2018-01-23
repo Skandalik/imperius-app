@@ -3,12 +3,11 @@ import {Button, Checkbox, Form, Grid, Segment} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
 import classnames from 'classnames';
 import Link from "react-router-dom/es/Link";
-import $ from 'jquery';
 import {
     BehaviorActionsEnum,
     BehaviorActionsEnumChoices,
-    BehaviorRequirementsEnumChoices, BehaviorConditionsSwitchableEnumChoices, BehaviorCondititionsFetchableEnumChoices,
-    BehaviorFetchableSwitchableConditions, ScheduledDayEnumChoices
+    BehaviorFetchableSwitchableConditions,
+    ScheduledDayEnumChoices
 } from "./BehaviorEnum";
 import {CheckboxField} from "react-semantic-redux-form";
 
@@ -115,6 +114,8 @@ class ScheduledBehaviorForm extends React.Component {
                                 />
                                 <Field name={'relativeDate'} type={'select'} component={'select'}
                                        className={'ui dropdown'}>
+                                    <option>- Select day -</option>
+                                    <option value={'today'}>Today</option>
                                     <option value={'tomorrow'}>Tomorrow</option>
                                     {this.getBehaviorOptions(ScheduledDayEnumChoices)}
                                 </Field>
