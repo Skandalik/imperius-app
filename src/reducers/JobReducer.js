@@ -21,6 +21,12 @@ export default (state = defaultState, action = {}) => {
                 jobs: action.payload.data
             };
         }
+        case 'REFETCH_JOBS_FULFILLED': {
+            return {
+                ...state,
+                jobs: action.payload.data
+            };
+        }
         case 'FETCH_JOB_PENDING': {
             return {
                 ...state,

@@ -17,6 +17,12 @@ export default function ScheduledBehaviorGridRow({behavior, deleteBehavior}) {
             : '';
     };
 
+    const extractFromDateTime = (date) => {
+        date = new Date(date);
+        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60 * 1000));
+        return date.toLocaleString();
+    };
+
     return (
         <Grid.Row key={behavior.id} columns={2} verticalAlign={'middle'}>
             <Grid.Column width={12} verticalAlign={'middle'}>
@@ -35,17 +41,17 @@ export default function ScheduledBehaviorGridRow({behavior, deleteBehavior}) {
                     </Label>
                     {getArgument(behavior.actionArgument)}
                     <List>
+                        <Label>
+                            <Icon name={'time'}/>
+                            Last run: {behavior.lastRunAt ? extractFromDateTime(behavior.lastRunAt) : 'never ran yet'}
+                        </Label>
                         {behavior.repeatable ?
                             <Label>
                                 <Icon name={'time'}/>
-                                Last run: {behavior.lastRunAt ? behavior.lastRunAt : 'never ran yet'}
+                                Next run: {extractFromDateTime(behavior.nextRunAt)}
                             </Label>
                             : ''
                         }
-                        <Label>
-                            <Icon name={'time'}/>
-                            Next run: {behavior.nextRunAt}
-                        </Label>
                         <Label>
                             <Icon name={behavior.repeatable ? 'repeat' : ''}/>
                             {behavior.repeatable ? 'Repeatable' : 'Only once'}
@@ -61,7 +67,8 @@ export default function ScheduledBehaviorGridRow({behavior, deleteBehavior}) {
             </Grid.Column>
             <Grid.Column width={4} verticalAlign={'middle'}>
                 <div className='ui two buttons'>
-                    <Button as={Link} to={`/sensor/${behavior.sensor.id}/scheduled_behaviors/edit/${behavior.id}`} primary
+                    <Button as={Link} to={`/sensor/${behavior.sensor.id}/scheduled_behaviors/edit/${behavior.id}`}
+                            primary
                             icon={'pencil'}/>
                     <Button icon={'delete'} color="red" onClick={() => {
                         deleteBehavior(behavior)

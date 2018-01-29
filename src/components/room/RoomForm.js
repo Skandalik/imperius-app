@@ -29,7 +29,7 @@ class RoomForm extends React.Component {
         return (
             <Grid centered columns={2}>
                 <Grid.Column>
-                    <h1 style={{marginTop: '1em'}}> { this.props.roomId ? 'Edit room' : 'Add new room' }</h1>
+                    <h1 style={{marginTop: '1em'}}> {this.props.roomId ? 'Edit room' : 'Add new room'}</h1>
                     <Form onSubmit={handleSubmit} loading={loading} style={padding}>
                         <Field
                             name="room"
@@ -44,8 +44,8 @@ class RoomForm extends React.Component {
                             component={this.renderField}
                             label="Set floor"
                         />
-                        <Button primary content={'Save'} type="submit" disabled={pristine || submitting} />
-                        <Button as={Link} to={'/room'} icon={'arrow left'} content={'Go back'} />
+                        <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
+                        <Button as={Link} to={'/room'} icon={'arrow left'} content={'Go back'}/>
                     </Form>
                 </Grid.Column>
             </Grid>
@@ -61,9 +61,12 @@ const validate = values => {
         };
     }
     if (!values.floor) {
-        errors.floor = {
-            message: 'You need to provide a floor'
-        };
+        let floor = String(values.floor);
+        if (typeof floor === 'undefined' || floor.length === 0) {
+            errors.floor = {
+                message: 'You need to provide a floor'
+            };
+        }
     }
     return errors;
 };

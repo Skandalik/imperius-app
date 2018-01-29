@@ -11,11 +11,42 @@ export function fetchJobs() {
     };
 }
 
+export function refetchJobs() {
+    return dispatch => {
+        return dispatch({
+            type: 'REFETCH_JOBS',
+            payload: getClient().get(url)
+        });
+    };
+}
+
 export function fetchJob(id) {
     return dispatch => {
         return dispatch({
             type: 'FETCH_JOB',
             payload: getClient().get(`${url}/${id}`)
+        });
+    };
+}
+
+export function fetchJobsWithCheck() {
+    return dispatch => {
+        return dispatch({
+            type: 'CHECK_JOB',
+            payload: getClient().get(`${url}/check`).then(function (response) {
+                return dispatch(fetchJobs())
+            })
+        });
+    };
+}
+
+export function isJobRunning() {
+    return dispatch => {
+        return dispatch({
+            type: 'CHECK_JOB',
+            payload: getClient().get(`${url}/check`).then(function (response) {
+                return dispatch(refetchJobs())
+            })
         });
     };
 }

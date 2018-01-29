@@ -41,6 +41,10 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         <Icon name="circle"/> Floor:{' '}
                         {sensor.room ? sensor.room.floor : 'Not set'}
                     </p>
+                    <p>
+                        <Icon name="circle"/> Data Type:{' '}
+                        {sensor.dataType}
+                    </p>
                     {sensor.switchable ? '' :
                         <p>
                             <Icon name="circle"/> Status: {sensor.status}
@@ -59,7 +63,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                             <div className='slider-group'>
                                 <Slider
                                     min={sensor.minimumValue}
-                                    max={255}
+                                    max={sensor.maximumValue}
                                     value={sensor.status}
                                     onChange={(value) => setValue(value, sensor)}
                                     onChangeComplete={() => setStatusSensor(sensor, sensor.status)}

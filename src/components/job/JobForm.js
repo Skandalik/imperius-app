@@ -4,7 +4,7 @@ import {Field, reduxForm} from 'redux-form';
 import classnames from 'classnames';
 import {Link} from 'react-router-dom';
 
-class RoomForm extends React.Component {
+class JobForm extends React.Component {
     renderField = ({input, label, type, meta: {touched, error}}) => (
         <Form.Field className={classnames({error: touched && error})}>
             <label>{label}</label>
@@ -13,11 +13,16 @@ class RoomForm extends React.Component {
         </Form.Field>
     );
 
-    componentWillReceiveProps = (nextProps) => {
-        const {room} = nextProps;
+    getJson = (json) => {
+        return JSON.parse(json);
+    }
 
-        if (room.id !== this.props.room.id) {
-            this.props.initialize(room);
+    componentWillReceiveProps = (nextProps) => {
+        const {job} = nextProps;
+
+        if (job.id !== this.props.job.id) {
+            job.additionalData = this.getJson(job.additionalData).interval;
+            this.props.initialize(job);
 
         }
     };
@@ -29,23 +34,17 @@ class RoomForm extends React.Component {
         return (
             <Grid centered columns={2}>
                 <Grid.Column>
-                    <h1 style={{marginTop: '1em'}}> { this.props.roomId ? 'Edit room' : 'Add new room' }</h1>
+                    <h1 style={{marginTop: '1em'}}> Edit job</h1>
                     <Form onSubmit={handleSubmit} loading={loading} style={padding}>
                         <Field
-                            name="room"
-                            type="text"
-                            component={this.renderField}
-                            label="Set room name"
-                        />
-                        <Field
-                            name="floor"
+                            name="additionalData"
                             type="number"
                             parse={parse}
                             component={this.renderField}
-                            label="Set floor"
+                            label="Set interval (seconds)"
                         />
-                        <Button primary content={'Save'} type="submit" disabled={pristine || submitting} />
-                        <Button as={Link} to={'/room'} icon={'arrow left'} content={'Go back'} />
+                        <Button primary content={'Save'} type="submit" disabled={pristine || submitting}/>
+                        <Button as={Link} to={'/job'} icon={'arrow left'} content={'Go back'}/>
                     </Form>
                 </Grid.Column>
             </Grid>
@@ -55,17 +54,12 @@ class RoomForm extends React.Component {
 
 const validate = values => {
     const errors = {};
-    if (!values.room) {
-        errors.room = {
-            message: 'You need to provide a valid room name!'
-        };
-    }
-    if (values.floor.toString().length === 0) {
-        errors.floor = {
-            message: 'You need to provide a floor'
+    if (!values.additionalData || values.additionalData <= 0) {
+        errors.additionalData = {
+            message: 'You need to provide valid interval (min 1 second)!'
         };
     }
     return errors;
 };
 
-export default reduxForm({form: 'room', validate})(RoomForm);
+export default reduxForm({form: 'job', validate})(JobForm);

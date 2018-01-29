@@ -3,6 +3,10 @@ import {Button, Card, Dimmer, Grid, Icon, Label, List, Loader, Segment} from 'se
 import {Link} from "react-router-dom";
 
 export default function JobCard({job, runJob, stopJob}) {
+    const getJson = (json) => {
+        return JSON.parse(json);
+    }
+
     return (
         <Card>
             <Segment className={'no-margin'} inverted={true} color={job.running ? 'green' : 'red'}
@@ -17,18 +21,26 @@ export default function JobCard({job, runJob, stopJob}) {
                 <br/>
                 <Card.Meta>
                     {job.error ?
-                        <p>
+                        <div>
                             <Label color={'red'}>
                                 <Icon name={'cancel'}/>
                                 Errored!
                             </Label>
-                        </p>
+                        </div>
                         : ''
                     }
                     {job.finished ?
                         <p>
                             <Icon name="circle"/> Last run at:{' '}
                             {job.lastRunAt}
+                        </p>
+                        : ''
+                    }
+                    {job.additionalData ?
+                        <p>
+                            <Icon name="circle"/> Check every:{' '}
+                            {getJson(job.additionalData).interval}
+                            {' '}seconds
                         </p>
                         : ''
                     }
@@ -39,11 +51,18 @@ export default function JobCard({job, runJob, stopJob}) {
                 </Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <div className="ui two buttons">
+                <div className="ui three buttons">
+                    {job.additionalData
+                        ?
+                        <Button as={Link} to={`/job/edit/${job.id}`} icon={'pencil'}/>
+                        : ''
+                    }
                     <Button color={'green'} icon={'play'} disabled={job.running} onClick={() => {
-                        runJob(job)}} />
+                        runJob(job)
+                    }}/>
                     <Button color={'red'} icon={'stop'} disabled={!job.running} onClick={() => {
-                        stopJob(job)}} />
+                        stopJob(job)
+                    }}/>
                 </div>
             </Card.Content>
         </Card>

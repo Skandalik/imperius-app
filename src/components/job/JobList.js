@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid, Segment, Dimmer, Loader, Icon} from 'semantic-ui-react';
 import JobCard from "./JobCard";
 
-export default function JobList({jobs, loading, runJob, stopJob}) {
+export default function JobList({jobs, loading, runJob, stopJob, changeIntervalHidden, showHideInterval}) {
     const columns = () => {
         return jobs.map(job => {
             return (
@@ -12,6 +12,8 @@ export default function JobList({jobs, loading, runJob, stopJob}) {
                         job={job}
                         runJob={runJob}
                         stopJob={stopJob}
+                        changeIntervalHidden={changeIntervalHidden}
+                        showHideInterval={showHideInterval}
                     />
                 </Grid.Column>
             )
