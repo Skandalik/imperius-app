@@ -35,7 +35,7 @@ export default (state = defaultState, action = {}) => {
                 ...state,
                 loading: false,
                 authenticated: false,
-                errors: action.payload.response.data
+                errors: action.payload.message || action.payload.response.data
             };
         }
         default:

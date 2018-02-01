@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Grid, Icon, Label, List, Segment} from 'semantic-ui-react';
 import {Link} from "react-router-dom";
 import {BehaviorActionsEnumChoices, BehaviorRequirementsEnumChoices, BehaviorConstants} from "./BehaviorEnum";
+import {confirmAlert} from "react-confirm-alert";
 
 export default function ScheduledBehaviorGridRow({behavior, deleteBehavior}) {
 
@@ -21,6 +22,16 @@ export default function ScheduledBehaviorGridRow({behavior, deleteBehavior}) {
         date = new Date(date);
         date = new Date(date.getTime() + (date.getTimezoneOffset() * 60 * 1000));
         return date.toLocaleString();
+    };
+
+    const submit = () => {
+        confirmAlert({
+            title: 'Delete behavior?',
+            message: 'Are you sure?',
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
+            onConfirm: () => deleteBehavior(behavior),
+        })
     };
 
     return (
@@ -71,7 +82,7 @@ export default function ScheduledBehaviorGridRow({behavior, deleteBehavior}) {
                             primary
                             icon={'pencil'}/>
                     <Button icon={'delete'} color="red" onClick={() => {
-                        deleteBehavior(behavior)
+                        submit()
                     }}/>
                 </div>
             </Grid.Column>

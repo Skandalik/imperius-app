@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button, Card, Dimmer, Divider, Icon, Label, Loader, Segment} from 'semantic-ui-react';
+import {Button, Card, Dimmer, Divider, Header, Icon, Label, Loader, Modal, Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Slider from 'react-rangeslider';
+import {confirmAlert} from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, deleteSensor, setValue, setStateSensor}) {
     const checkRoomAndNameSet = () => {
@@ -18,14 +20,31 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
         }
         return '';
     };
+    const submit = () => {
+        confirmAlert({
+            title: 'Delete sensor?',
+            message: 'It will reset your sensor to defaults!',
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
+            onConfirm: () => deleteSensor(sensor),
+        })
+    };
 
     return (
         <Card>
             {checkRoomAndNameSet()}
-            <Segment className={'no-margin'} inverted={true} color={sensor.active ? 'green' : 'red'}
-                     textAlign={'center'}>
-                {sensor.active ? 'ACTIVE' : 'INACTIVE'}
-            </Segment>
+            {
+                sensor.disconnected ?
+                <Segment className={'no-margin'} inverted={true} color={'black'}
+                         textAlign={'center'}>
+                    {'DISCONNECTED'}
+                </Segment>
+                :
+                <Segment className={'no-margin'} inverted={true} color={sensor.active ? 'green' : 'red'}
+                         textAlign={'center'}>
+                    {sensor.active ? 'ACTIVE' : 'INACTIVE'}
+                </Segment>
+            }
             <Card.Content>
                 <Dimmer invert="true" active={sensor.loading}>
                     <Loader content="Loading data..."/>
@@ -44,7 +63,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                     {sensor.fetchable ?
                         <p>
                             <Icon name="circle"/> Data Type:{' '}
-                            {sensor.dataType}
+                            {sensor.dataType.replace("_", " ")}
                         </p>
                         : ''
                     }
@@ -59,7 +78,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                 </Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <div>
+                <div hidden={sensor.disconnected}>
                     {sensor.adjustable ?
                         <div>
                             Status:
@@ -79,6 +98,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                 </div>
                 <div className="ui">
                     <Button
+                        disabled={sensor.disconnected}
                         fluid
                         primary
                         icon=""
@@ -91,12 +111,14 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                 <div className="ui three buttons">
                     {sensor.switchable || sensor.adjustable ? (
                         <Button
+                            disabled={sensor.disconnected}
                             color={sensor.active ? 'red' : 'green'}
                             icon="power"
                             onClick={() => setStateSensor(sensor, ~~!sensor.active)}
                         />
                     ) : (
                         <Button
+                            disabled={sensor.disconnected}
                             primary
                             icon="refresh"
                             onClick={() => checkStatusSensor(sensor)}
@@ -104,6 +126,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                     )}
 
                     <Button
+                        disabled={sensor.disconnected}
                         basic
                         color="green"
                         icon="pencil"
@@ -114,7 +137,7 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         basic
                         color="red"
                         icon="delete"
-                        onClick={() => deleteSensor(sensor)}
+                        onClick={() => submit()}
                     />
                 </div>
             </Card.Content>

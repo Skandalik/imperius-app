@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Dimmer, Grid, Label, List, Loader, Segment} from 'semantic-ui-react';
 import {Link} from "react-router-dom";
 import {BehaviorActionsEnumChoices, BehaviorConstants, BehaviorRequirementsEnumChoices} from "./BehaviorEnum";
+import {confirmAlert} from "react-confirm-alert";
 
 export default function ManualBehaviorGridRow({behavior, deleteBehavior}) {
 
@@ -16,6 +17,16 @@ export default function ManualBehaviorGridRow({behavior, deleteBehavior}) {
             </Label>
             : '';
     }
+
+    const submit = () => {
+        confirmAlert({
+            title: 'Delete behavior?',
+            message: 'Are you sure?',
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
+            onConfirm: () => deleteBehavior(behavior),
+        })
+    };
 
     return (
         <Grid.Row key={behavior.id} columns={2} verticalAlign={'middle'}>
@@ -55,7 +66,7 @@ export default function ManualBehaviorGridRow({behavior, deleteBehavior}) {
                     <Button as={Link} to={`/sensor/${behavior.sensor.id}/manual_behaviors/edit/${behavior.id}`} primary
                             icon={'pencil'}/>
                     <Button icon={'delete'} color="red" onClick={() => {
-                        deleteBehavior(behavior)
+                        submit()
                     }}/>
                 </div>
             </Grid.Column>
