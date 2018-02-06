@@ -73,7 +73,10 @@ export default function SensorCard({sensor, setStatusSensor, checkStatusSensor, 
                         </p>
                     }
                     <p>
-                        <Icon name="circle"/> {sensor.uuid}
+                        <div className="word-wrap">
+                            <Icon name="circle"/> UUID: <br/>
+                            {sensor.uuid}
+                        </div>
                     </p>
                 </Card.Meta>
             </Card.Content>
