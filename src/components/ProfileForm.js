@@ -34,12 +34,6 @@ class ProfileForm extends React.Component {
                             label="Username"
                         />
                         <Field
-                            name="email"
-                            type="text"
-                            component={this.renderField}
-                            label="E-mail"
-                        />
-                        <Field
                             name="password"
                             type="password"
                             component={this.renderField}

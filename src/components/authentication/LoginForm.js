@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
                             component={this.renderField}
                             label="Password"
                         />
-                        <Button primary content={'Save'} type="submit" disabled={pristine || submitting} />
+                        <Button primary content={'Login'} type="submit" disabled={pristine || submitting} />
                     </Form>
                 </Grid.Column>
             </Grid>
