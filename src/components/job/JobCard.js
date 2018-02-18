@@ -6,7 +6,11 @@ export default function JobCard({job, runJob, stopJob}) {
     const getJson = (json) => {
         return JSON.parse(json);
     }
-
+    const extractFromDateTime = (date) => {
+        date = new Date(date);
+        date = new Date(date.getTime() - (date.getTimezoneOffset() * 60 * 1000));
+        return date.toLocaleString();
+    };
     return (
         <Card>
             <Segment className={'no-margin'} inverted={true} color={job.running ? 'green' : 'red'}
@@ -32,7 +36,7 @@ export default function JobCard({job, runJob, stopJob}) {
                     {job.finished ?
                         <p>
                             <Icon name="circle"/> Last run at:{' '}
-                            {job.lastRunAt}
+                            {extractFromDateTime(job.lastRunAt)}
                         </p>
                         : ''
                     }
